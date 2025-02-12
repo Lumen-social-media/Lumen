@@ -3,8 +3,67 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.12.35707.178 d17.12
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{29A207AC-CC51-4442-BB31-CE12769DA213}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Microservices", "Microservices", "{BC0B9FEF-4609-46DB-9D52-FB93E8D344ED}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{F4070772-1725-4C1F-84A4-4CB64C5231FC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EmailSender", "EmailSender", "{A45F7D55-6C54-4AFE-ADE8-115D110829F9}"
+	ProjectSection(SolutionItems) = preProject
+		src\Microservices\EmailSender\Lumen.EmailSender.sln = src\Microservices\EmailSender\Lumen.EmailSender.sln
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Friendship", "Friendship", "{B3283558-7C35-4687-A47A-1223DB5DEB43}"
+	ProjectSection(SolutionItems) = preProject
+		src\Microservices\Friendship\Lumen.Friendship.sln = src\Microservices\Friendship\Lumen.Friendship.sln
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity", "Identity", "{BEBE344F-CA5D-4956-B69D-3E6FA7278411}"
+	ProjectSection(SolutionItems) = preProject
+		src\Microservices\Identity\Lumen.Identity.sln = src\Microservices\Identity\Lumen.Identity.sln
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Likes", "Likes", "{29248D80-064D-4E89-B9B4-3A567768197A}"
+	ProjectSection(SolutionItems) = preProject
+		src\Microservices\Likes\Lumen.Likes.sln = src\Microservices\Likes\Lumen.Likes.sln
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PushNotificator", "PushNotificator", "{C8D6C72B-5D1B-484B-9FEA-B211E9DBAE19}"
+	ProjectSection(SolutionItems) = preProject
+		src\Microservices\PushNotificator\Lumen.PushNotificator.sln = src\Microservices\PushNotificator\Lumen.PushNotificator.sln
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "User", "User", "{C349228A-8122-4E89-AFCE-6B3FDAC22A93}"
+	ProjectSection(SolutionItems) = preProject
+		src\Microservices\User\Lumen.User.sln = src\Microservices\User\Lumen.User.sln
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lumen.Common", "src\Microservices\Common\Lumen.Common\Lumen.Common.csproj", "{498AA54E-0A52-4201-957B-178DBB1CAD7A}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{498AA54E-0A52-4201-957B-178DBB1CAD7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{498AA54E-0A52-4201-957B-178DBB1CAD7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{498AA54E-0A52-4201-957B-178DBB1CAD7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{498AA54E-0A52-4201-957B-178DBB1CAD7A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BC0B9FEF-4609-46DB-9D52-FB93E8D344ED} = {29A207AC-CC51-4442-BB31-CE12769DA213}
+		{F4070772-1725-4C1F-84A4-4CB64C5231FC} = {BC0B9FEF-4609-46DB-9D52-FB93E8D344ED}
+		{A45F7D55-6C54-4AFE-ADE8-115D110829F9} = {BC0B9FEF-4609-46DB-9D52-FB93E8D344ED}
+		{B3283558-7C35-4687-A47A-1223DB5DEB43} = {BC0B9FEF-4609-46DB-9D52-FB93E8D344ED}
+		{BEBE344F-CA5D-4956-B69D-3E6FA7278411} = {BC0B9FEF-4609-46DB-9D52-FB93E8D344ED}
+		{29248D80-064D-4E89-B9B4-3A567768197A} = {BC0B9FEF-4609-46DB-9D52-FB93E8D344ED}
+		{C8D6C72B-5D1B-484B-9FEA-B211E9DBAE19} = {BC0B9FEF-4609-46DB-9D52-FB93E8D344ED}
+		{C349228A-8122-4E89-AFCE-6B3FDAC22A93} = {BC0B9FEF-4609-46DB-9D52-FB93E8D344ED}
+		{498AA54E-0A52-4201-957B-178DBB1CAD7A} = {F4070772-1725-4C1F-84A4-4CB64C5231FC}
 	EndGlobalSection
 EndGlobal
