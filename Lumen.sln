@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35707.178 d17.12
+VisualStudioVersion = 17.12.35707.178
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{29A207AC-CC51-4442-BB31-CE12769DA213}"
 EndProject
@@ -14,9 +14,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EmailSender", "EmailSender"
 		src\Microservices\EmailSender\Lumen.EmailSender.sln = src\Microservices\EmailSender\Lumen.EmailSender.sln
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Friendship", "Friendship", "{B3283558-7C35-4687-A47A-1223DB5DEB43}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Subscriptions", "Subscriptions", "{B3283558-7C35-4687-A47A-1223DB5DEB43}"
 	ProjectSection(SolutionItems) = preProject
-		src\Microservices\Friendship\Lumen.Friendship.sln = src\Microservices\Friendship\Lumen.Friendship.sln
+		src\Microservices\Friendship\Lumen.Subscriptions.sln = src\Microservices\Friendship\Lumen.Subscriptions.sln
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity", "Identity", "{BEBE344F-CA5D-4956-B69D-3E6FA7278411}"
@@ -34,9 +34,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PushNotificator", "PushNoti
 		src\Microservices\PushNotificator\Lumen.PushNotificator.sln = src\Microservices\PushNotificator\Lumen.PushNotificator.sln
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "User", "User", "{C349228A-8122-4E89-AFCE-6B3FDAC22A93}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Users", "Users", "{C349228A-8122-4E89-AFCE-6B3FDAC22A93}"
 	ProjectSection(SolutionItems) = preProject
-		src\Microservices\User\Lumen.User.sln = src\Microservices\User\Lumen.User.sln
+		src\Microservices\User\Lumen.Users.sln = src\Microservices\User\Lumen.Users.sln
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lumen.Common", "src\Microservices\Common\Lumen.Common\Lumen.Common.csproj", "{498AA54E-0A52-4201-957B-178DBB1CAD7A}"
