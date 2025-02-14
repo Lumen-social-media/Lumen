@@ -25,4 +25,8 @@ public sealed class User : IAggregateRoot, IEntity<int>
     public Gender Gender { get; set; } = Gender.NotSet;
 
     public string SchoolName { get; set; } = string.Empty;
+
+    public IEnumerable<User> CanViewPrivateProfile { get; set; } = new List<User>();
+
+    public bool HasPublicProfile { get; set; }
 }

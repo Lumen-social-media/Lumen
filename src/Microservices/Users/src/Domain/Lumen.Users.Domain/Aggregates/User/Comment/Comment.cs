@@ -15,6 +15,8 @@ public sealed class Comment : IEntity<int>
     public Comment? Parent { get; set; }
     public int ParentId { get; set; }
 
+    public int Position { get; set; }
+
     public required string Body { get; set; }
     public string[] ImagesUrls { get; set; } = default!;
 }

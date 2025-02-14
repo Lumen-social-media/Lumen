@@ -18,6 +18,6 @@ public sealed class Post : IEntity<int>
     public Post? Parent { get; set; }
     public int ParentId { get; set; }
 
-    public User Owner { get; set; } = default!;
-    public int OwnerId { get; set; }
+    public UserBoard.UserBoard Board { get; set; } = default!;
+    public int BoardId { get; set; }
 }

@@ -11,3 +11,4 @@ public sealed class Community : IEntity<int>
 
     public string[] ImagesUrls { get; set; } = default!;
 }
+
