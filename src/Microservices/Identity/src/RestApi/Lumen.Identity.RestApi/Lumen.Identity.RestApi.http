@@ -1,0 +1,6 @@
+@Lumen.Identity.RestApi_HostAddress = http://localhost:5101
+
+GET {{Lumen.Identity.RestApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
