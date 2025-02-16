@@ -8,7 +8,10 @@ builder.Services.AddOpenApi();
 
 var infrastructureOptions = new InfrastructureOptions
 {
-    ConnectionString = builder.Configuration.GetConnectionString("PostgreSQL")
+    ConnectionString = builder.Configuration.GetConnectionString("PostgreSQL"),
+    RabbitMQHost = builder.Configuration["RabbitMQ:Host"] ?? "localhost",
+    RabbitMQPassword = builder.Configuration["RabbitMQ:Password"] ?? "guest",
+    RabbitMQUserName = builder.Configuration["RabbitMQ:Username"] ?? "guest"
 };
 
 builder.Services.AddInfrastructure(infrastructureOptions);

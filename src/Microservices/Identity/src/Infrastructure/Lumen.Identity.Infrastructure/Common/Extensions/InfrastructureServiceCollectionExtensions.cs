@@ -1,4 +1,6 @@
-﻿using Lumen.Identity.Infrastructure.User;
+﻿using Lumen.Identity.Application.User.Consumers;
+using Lumen.Identity.Infrastructure.User;
+using MassTransit;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,6 +19,23 @@ public static class InfrastructureServiceCollectionExtensions
         services.AddIdentity<InfrastructureUser, IdentityRole<int>>()
             .AddDefaultTokenProviders()
             .AddEntityFrameworkStores<LumenDbContext>();
+
+
+        services.AddMassTransit(x =>
+        {
+            x.AddConsumers(typeof(UserCreateMessageConsumer).Assembly);
+
+            x.UsingRabbitMq((context, cfg) =>
+            {
+                cfg.Host(options.RabbitMQHost, h =>
+                {
+                    h.Username(options.RabbitMQUserName);
+                    h.Password(options.RabbitMQPassword);
+                });
+
+                cfg.ConfigureEndpoints(context);
+            });
+        });
 
         return services;
     }

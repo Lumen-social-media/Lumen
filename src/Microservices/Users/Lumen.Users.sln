@@ -26,6 +26,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lumen.Users.RestApi", "src\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lumen.Users.Infrastructure", "src\Infrastructure\Lumen.Users.Infrastructure\Lumen.Users.Infrastructure.csproj", "{03AA6DF2-C755-437A-894E-13D6241C6BC1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lumen.Common", "..\Common\Lumen.Common\Lumen.Common.csproj", "{6A01FC05-9358-F3E8-83CD-3D1608DF4C68}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,6 +50,10 @@ Global
 		{03AA6DF2-C755-437A-894E-13D6241C6BC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{03AA6DF2-C755-437A-894E-13D6241C6BC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{03AA6DF2-C755-437A-894E-13D6241C6BC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A01FC05-9358-F3E8-83CD-3D1608DF4C68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A01FC05-9358-F3E8-83CD-3D1608DF4C68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A01FC05-9358-F3E8-83CD-3D1608DF4C68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A01FC05-9358-F3E8-83CD-3D1608DF4C68}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -61,5 +67,9 @@ Global
 		{37192F89-59EB-476A-A076-986EA47DB9FB} = {B475CE07-2602-4379-8770-E08137BE92A5}
 		{2D3AF7CC-1BE1-45CF-84A4-1DAD2F4C26FF} = {EAE4DC21-3DF0-4E06-890C-917C8EF1ADBA}
 		{03AA6DF2-C755-437A-894E-13D6241C6BC1} = {44E2D837-3D44-4650-887D-2032D7D5DC17}
+		{6A01FC05-9358-F3E8-83CD-3D1608DF4C68} = {6665880C-5124-4436-BA7E-1251164583F3}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A3752981-292B-4FE9-8E7C-E99E23FBD509}
 	EndGlobalSection
 EndGlobal
