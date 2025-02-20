@@ -1,10 +1,10 @@
-﻿using Lumen.Users.Domain.Aggregates.User;
-using Lumen.Users.Domain.Aggregates.User.Comment;
+﻿using Lumen.Users.Domain.Aggregates.Community;
+using Lumen.Users.Domain.Aggregates.User;
 using Lumen.Users.Domain.Aggregates.User.CommentImage;
-using Lumen.Users.Domain.Aggregates.User.Community;
 using Lumen.Users.Domain.Aggregates.User.Post;
 using Lumen.Users.Domain.Aggregates.User.PostImage;
 using Lumen.Users.Domain.Aggregates.User.RootAnswerComment;
+using Lumen.Users.Domain.Aggregates.User.RootComment;
 using Lumen.Users.Domain.Aggregates.User.UserBoard;
 using Microsoft.EntityFrameworkCore;
 

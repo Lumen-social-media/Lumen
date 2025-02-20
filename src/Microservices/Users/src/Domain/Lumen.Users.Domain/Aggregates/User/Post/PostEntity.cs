@@ -1,5 +1,6 @@
-﻿using Lumen.Users.Domain.Aggregates.User.Community;
+﻿using Lumen.Users.Domain.Aggregates.Community;
 using Lumen.Users.Domain.Aggregates.User.PostImage;
+using Lumen.Users.Domain.Aggregates.User.RootComment;
 using Lumen.Users.Domain.Aggregates.User.UserBoard;
 using Lumen.Users.Domain.Common;
 
@@ -16,4 +17,7 @@ public sealed class PostEntity : IEntity<int>
 
     public UserBoardEntity Board { get; set; } = default!;
     public int BoardId { get; set; }
+
+    public IEnumerable<RootCommentEntity> RootComments { get; set; } = new List<RootCommentEntity>();
+  
 }

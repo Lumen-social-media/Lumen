@@ -1,7 +1,8 @@
 ﻿using Lumen.Users.Domain.Aggregates.User.Post;
+using Lumen.Users.Domain.Aggregates.User.RootAnswerComment;
 using Lumen.Users.Domain.Common;
 
-namespace Lumen.Users.Domain.Aggregates.User.Comment;
+namespace Lumen.Users.Domain.Aggregates.User.RootComment;
 
 public sealed class RootCommentEntity : IEntity<int>
 {
@@ -15,4 +16,6 @@ public sealed class RootCommentEntity : IEntity<int>
 
     public required string Body { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+    public IEnumerable<RootAnswerCommentEntity> Answers { get; set; } = new List<RootAnswerCommentEntity>();
 }

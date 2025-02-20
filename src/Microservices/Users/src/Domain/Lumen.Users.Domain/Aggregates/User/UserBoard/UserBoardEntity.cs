@@ -1,4 +1,5 @@
-﻿using Lumen.Users.Domain.Common;
+﻿using Lumen.Users.Domain.Aggregates.User.Post;
+using Lumen.Users.Domain.Common;
 
 namespace Lumen.Users.Domain.Aggregates.User.UserBoard;
 
@@ -10,4 +11,6 @@ public sealed class UserBoardEntity : IEntity<int>
     public int OwnerId { get; set; }
 
     public bool IsPublic { get; set; }
+
+    public IEnumerable<PostEntity> Posts { get; set; } = new List<PostEntity>();
 }
