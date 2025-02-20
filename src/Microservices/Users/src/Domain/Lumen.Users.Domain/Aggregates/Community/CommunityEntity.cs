@@ -1,6 +1,8 @@
-﻿using Lumen.Users.Domain.Common;
+﻿using Lumen.Users.Domain.Aggregates.User;
+using Lumen.Users.Domain.Aggregates.User.Post;
+using Lumen.Users.Domain.Common;
 
-namespace Lumen.Users.Domain.Aggregates.User.Community;
+namespace Lumen.Users.Domain.Aggregates.Community;
 
 public sealed class CommunityEntity : IEntity<int>
 {
@@ -12,6 +14,7 @@ public sealed class CommunityEntity : IEntity<int>
     public string[] ImagesUrls { get; set; } = default!;
     public string Description { get; set; } = string.Empty;
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-    
+
+    public IEnumerable<PostEntity> Posts { get; set; } = new List<PostEntity>();
 }
 

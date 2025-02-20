@@ -7,6 +7,8 @@ public abstract class EfReadOnlyRepositoryBase<TEntity, TId>(LumenDbContext dbCo
     where TEntity : class, IEntity<TId>
     where TId : notnull
 {
+    protected LumenDbContext DbContext => dbContext;
+
     public async Task<TEntity?> FindByIdAsync(TId id, CancellationToken cancellationToken = default)
     {
         var entity = await dbContext.Set<TEntity>().FindAsync([id], cancellationToken);

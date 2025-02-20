@@ -1,4 +1,8 @@
-﻿using Lumen.Users.Domain.Common;
+﻿using Lumen.Users.Domain.Aggregates.Community;
+using Lumen.Users.Domain.Aggregates.User.RootAnswerComment;
+using Lumen.Users.Domain.Aggregates.User.RootComment;
+using Lumen.Users.Domain.Aggregates.User.UserBoard;
+using Lumen.Users.Domain.Common;
 
 namespace Lumen.Users.Domain.Aggregates.User;
 
@@ -26,7 +30,14 @@ public sealed class UserEntity : IAggregateRoot, IEntity<int>
 
     public string SchoolName { get; set; } = string.Empty;
 
+    public UserBoardEntity Board { get; set; } = default!;
+    public int BoardId { get; set; }
+
     public IEnumerable<UserEntity> CanViewPrivateProfile { get; set; } = new List<UserEntity>();
+    public IEnumerable<CommunityEntity> CreatedCommunities { get; set; } = new List<CommunityEntity>();
+    public IEnumerable<RootAnswerCommentEntity> RootAnswerComments { get; set; } = new List<RootAnswerCommentEntity>();
+    public IEnumerable<RootCommentEntity> RootComments { get; set; } = new List<RootCommentEntity>();
 
     public bool HasPublicProfile { get; set; }
+    public bool OnlyRegisteredUsersCanViewProfile { get; set; }
 }

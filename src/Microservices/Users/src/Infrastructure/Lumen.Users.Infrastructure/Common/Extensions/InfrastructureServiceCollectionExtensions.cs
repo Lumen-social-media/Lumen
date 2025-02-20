@@ -1,4 +1,7 @@
 ﻿using Lumen.Users.Application.Aggregates.User.Consumers;
+using Lumen.Users.Domain.Aggregates.User.Repositories;
+using Lumen.Users.Domain.Common.UnitOfWorks;
+using Lumen.Users.Infrastructure.Aggregates.User.Repositories;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,6 +33,21 @@ public static class InfrastructureServiceCollectionExtensions
             });
         });
 
+        services.AddScoped<IEfReadonlyUnitOfWork, EfReadOnlyUnitOfWork>();
+        services.AddScoped<IEfWriteOnlyUnitOfWork, EfWriteOnlyUnitOfWork>();
+
+        services.AddScoped<IUserEfReadOnlyRepository, UserEfReadOnlyRepository>();
+        //services.AddScoped<(IUserBoardEfReadOnlyRepository, >();
+        //services.AddScoped<IUserEfReadOnlyRepository, UserEfReadOnlyRepository>();
+        //services.AddScoped<IUserEfReadOnlyRepository, UserEfReadOnlyRepository>();
+        //services.AddScoped<IUserEfReadOnlyRepository, UserEfReadOnlyRepository>();
+        //services.AddScoped<IUserEfReadOnlyRepository, UserEfReadOnlyRepository>();
+
+        services.AddScoped<IUserEfWriteOnlyRepository, UserEfWriteOnlyRepository>();
+        //services.AddScoped<IUserEfReadOnlyRepository, UserEfReadOnlyRepository>();
+        //services.AddScoped<IUserEfReadOnlyRepository, UserEfReadOnlyRepository>();
+        //services.AddScoped<IUserEfReadOnlyRepository, UserEfReadOnlyRepository>();
+        //services.AddScoped<IUserEfReadOnlyRepository, UserEfReadOnlyRepository>();
         return services;
     }
 }

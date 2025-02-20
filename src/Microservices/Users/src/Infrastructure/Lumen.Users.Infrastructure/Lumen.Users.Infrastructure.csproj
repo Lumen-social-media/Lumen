@@ -15,4 +15,14 @@
     <ProjectReference Include="..\..\Application\Lumen.Users.Application\Lumen.Users.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Aggregates\Community\" />
+    <Folder Include="Aggregates\User\CommentImage\" />
+    <Folder Include="Aggregates\User\PostImage\" />
+    <Folder Include="Aggregates\User\Post\" />
+    <Folder Include="Aggregates\User\RootAnswerComment\" />
+    <Folder Include="Aggregates\User\RootComment\" />
+    <Folder Include="Aggregates\User\UserBoard\" />
+  </ItemGroup>
+
 </Project>

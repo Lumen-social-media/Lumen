@@ -1,4 +1,4 @@
-﻿using Lumen.Users.Domain.Aggregates.User.Comment;
+﻿using Lumen.Users.Domain.Aggregates.User.RootComment;
 using Lumen.Users.Domain.Common;
 
 namespace Lumen.Users.Domain.Aggregates.User.RootAnswerComment;
@@ -15,4 +15,5 @@ public sealed class RootAnswerCommentEntity : IEntity<int>
 
     public required string Body { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
 }

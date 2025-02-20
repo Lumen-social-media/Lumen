@@ -1,4 +1,4 @@
-﻿using Lumen.Users.Application.Aggregates.User.Community;
+﻿using Lumen.Users.Application.Aggregates.Community;
 using Lumen.Users.Application.Aggregates.User.PostImage;
 using Lumen.Users.Application.Aggregates.User.UserBoard;
 
