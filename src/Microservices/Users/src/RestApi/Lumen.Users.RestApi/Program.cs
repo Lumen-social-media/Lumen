@@ -1,9 +1,25 @@
+using Lumen.Users.Application.Common.Extensions;
+using Lumen.Users.Infrastructure.Common;
+using Lumen.Users.Infrastructure.Common.Extensions;
+
 var builder = WebApplication.CreateBuilder(args);
+var configuration = builder.Configuration;
+var services = builder.Services;
 
-builder.Services.AddControllers();
-builder.Services.AddOpenApi();
+services.AddControllers();
+services.AddOpenApi();
 
-builder.Services.AddTransient(s => s.GetService<HttpContext>()!.User);
+var infrastructureOptions = new InfrastructureOptions
+{
+    ConnectionString = configuration.GetConnectionString("PostgreSQL"),
+    RabbitMQHost = configuration["RabbitMQ:Host"]!,
+    RabbitMQPassword = configuration["RabbitMQ:Password"]!,
+    RabbitMQUserName = configuration["RabbitMQ:UserName"]!
+};
+
+services.AddApplication();
+services.AddInfrastructure(infrastructureOptions);
+services.AddTransient(s => s.GetService<HttpContext>()!.User);
 
 var app = builder.Build();
 

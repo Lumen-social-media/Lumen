@@ -1,8 +1,4 @@
-﻿using Lumen.Users.Application.Aggregates.User.Consumers;
-using Lumen.Users.Domain.Aggregates.User.Repositories;
-using Lumen.Users.Domain.Common.UnitOfWorks;
-using Lumen.Users.Infrastructure.Aggregates.User.Repositories;
-using MassTransit;
+﻿using Lumen.Users.UseCases;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -17,37 +13,24 @@ public static class InfrastructureServiceCollectionExtensions
             dbOptions.UseNpgsql(options.ConnectionString);
         });
 
-        services.AddMassTransit(configure =>
-        {
-            configure.AddConsumers(typeof(UserCreatedMessageConsumer).Assembly);
+        services.AddScoped<IApplicationContext, LumenDbContext>();
 
-            configure.UsingRabbitMq((busContext, rabbitMqBusFactory) =>
-            {
-                rabbitMqBusFactory.Host(options.RabbitMQHost, conf =>
-                {
-                    conf.Username(options.RabbitMQUserName);
-                    conf.Password(options.RabbitMQPassword);
-                });
+        //services.AddMassTransit(configure =>
+        //{
+        //    configure.AddConsumers(typeof(UserCreatedMessageConsumer).Assembly);
 
-                rabbitMqBusFactory.ConfigureEndpoints(busContext);
-            });
-        });
+        //    configure.UsingRabbitMq((busContext, rabbitMqBusFactory) =>
+        //    {
+        //        rabbitMqBusFactory.Host(options.RabbitMQHost, conf =>
+        //        {
+        //            conf.Username(options.RabbitMQUserName);
+        //            conf.Password(options.RabbitMQPassword);
+        //        });
 
-        services.AddScoped<IEfReadonlyUnitOfWork, EfReadOnlyUnitOfWork>();
-        services.AddScoped<IEfWriteOnlyUnitOfWork, EfWriteOnlyUnitOfWork>();
+        //        rabbitMqBusFactory.ConfigureEndpoints(busContext);
+        //    });
+        //});
 
-        services.AddScoped<IUserEfReadOnlyRepository, UserEfReadOnlyRepository>();
-        //services.AddScoped<(IUserBoardEfReadOnlyRepository, >();
-        //services.AddScoped<IUserEfReadOnlyRepository, UserEfReadOnlyRepository>();
-        //services.AddScoped<IUserEfReadOnlyRepository, UserEfReadOnlyRepository>();
-        //services.AddScoped<IUserEfReadOnlyRepository, UserEfReadOnlyRepository>();
-        //services.AddScoped<IUserEfReadOnlyRepository, UserEfReadOnlyRepository>();
-
-        services.AddScoped<IUserEfWriteOnlyRepository, UserEfWriteOnlyRepository>();
-        //services.AddScoped<IUserEfReadOnlyRepository, UserEfReadOnlyRepository>();
-        //services.AddScoped<IUserEfReadOnlyRepository, UserEfReadOnlyRepository>();
-        //services.AddScoped<IUserEfReadOnlyRepository, UserEfReadOnlyRepository>();
-        //services.AddScoped<IUserEfReadOnlyRepository, UserEfReadOnlyRepository>();
         return services;
     }
 }

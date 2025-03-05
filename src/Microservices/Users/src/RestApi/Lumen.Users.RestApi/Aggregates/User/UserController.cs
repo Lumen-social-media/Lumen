@@ -1,4 +1,6 @@
-﻿using Lumen.Users.Application.Aggregates.User.Queries.GetProfile;
+﻿using Lumen.Users.Application.Aggregates.Users;
+using Lumen.Users.Application.Aggregates.Users.Commands;
+using Lumen.Users.Domain.Aggregates.Users.Dtos;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,15 +10,22 @@ namespace Lumen.Users.RestApi.Aggregates.User;
 [Route("/api/v1/users")]
 public class UserController(IMediator mediator) : ApiControllerBase(mediator)
 {
-    [HttpGet("/profile/{userId:int}")]
-    [ProducesResponseType(typeof(GetUserProfileQueryResponse), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    public async Task<ActionResult<GetUserProfileQueryResponse>> Profile(int userId, CancellationToken cancellationToken)
+    [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(UserResponse))]
+    public async Task<ActionResult<UserResponse>> CreateUser([FromBody] CreateUserDto userDto, CancellationToken cancellationToken)
     {
-        var query = new GetUserProfileQuery { UserId = userId };
+        var command = new CreateUserCommand { Dto = userDto };
+        var response = await Mediator.Send(command, cancellationToken);
 
-        var response = await Mediator.Send(query, cancellationToken);
+        return CreatedAtAction(nameof(CreateUser), response);
+    }
+
+    [HttpDelete("{userId:int}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserResponse))]
+    public async Task<ActionResult<UserResponse>> DeleteUser(int userId, CancellationToken cancellationToken)
+    {
+        var command = new DeleteUserByIdCommand { Id = userId };
+        var response = await Mediator.Send(command, cancellationToken);
 
         return Ok(response);
     }

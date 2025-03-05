@@ -6,4 +6,24 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Aggregates\Users\Entities\CommentImages\Dto\**" />
+    <Compile Remove="Aggregates\Users\Entities\PostImages\Models\**" />
+    <EmbeddedResource Remove="Aggregates\Users\Entities\CommentImages\Dto\**" />
+    <EmbeddedResource Remove="Aggregates\Users\Entities\PostImages\Models\**" />
+    <None Remove="Aggregates\Users\Entities\CommentImages\Dto\**" />
+    <None Remove="Aggregates\Users\Entities\PostImages\Models\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Aggregates\Communities\Entities\" />
+    <Folder Include="Aggregates\Users\Entities\RootAnswerComments\Models\" />
+    <Folder Include="Aggregates\Users\Entities\RootComments\Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.11.0" />
+    <PackageReference Include="Mapster" Version="7.4.0" />
+  </ItemGroup>
+
 </Project>

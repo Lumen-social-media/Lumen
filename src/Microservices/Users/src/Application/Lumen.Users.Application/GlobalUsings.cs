@@ -1,0 +1,1 @@
+﻿global using Lumen.Users.Application.Common;

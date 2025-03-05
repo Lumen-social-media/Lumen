@@ -8,21 +8,17 @@
 
   <ItemGroup>
     <PackageReference Include="MassTransit.RabbitMQ" Version="8.3.6" />
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.3" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Aggregates\Communities\Entities\" />
+    <Folder Include="Aggregates\Users\Consumers\" />
+    <Folder Include="Aggregates\Users\Entities\" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Application\Lumen.Users.Application\Lumen.Users.Application.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Aggregates\Community\" />
-    <Folder Include="Aggregates\User\CommentImage\" />
-    <Folder Include="Aggregates\User\PostImage\" />
-    <Folder Include="Aggregates\User\Post\" />
-    <Folder Include="Aggregates\User\RootAnswerComment\" />
-    <Folder Include="Aggregates\User\RootComment\" />
-    <Folder Include="Aggregates\User\UserBoard\" />
   </ItemGroup>
 
 </Project>
