@@ -28,6 +28,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lumen.Identity.RestApi", "s
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lumen.Common", "..\Common\Lumen.Common\Lumen.Common.csproj", "{6A01FC05-9358-F3E8-83CD-3D1608DF4C68}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UseCase", "UseCase", "{97327E33-EDCB-48F1-BCDE-D8F3DA254F47}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lumen.Identity.UseCase", "src\UseCase\Lumen.Identity.UseCase\Lumen.Identity.UseCase.csproj", "{17B778E9-3DBA-47B9-A7C7-16B1468EC4C7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,6 +58,10 @@ Global
 		{6A01FC05-9358-F3E8-83CD-3D1608DF4C68}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6A01FC05-9358-F3E8-83CD-3D1608DF4C68}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6A01FC05-9358-F3E8-83CD-3D1608DF4C68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17B778E9-3DBA-47B9-A7C7-16B1468EC4C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17B778E9-3DBA-47B9-A7C7-16B1468EC4C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17B778E9-3DBA-47B9-A7C7-16B1468EC4C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17B778E9-3DBA-47B9-A7C7-16B1468EC4C7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -68,6 +76,8 @@ Global
 		{9CA8E999-A777-4F0A-B4FD-46785262F781} = {8E72A6F3-9D93-4351-9C3F-6F771054622B}
 		{65302760-9AE3-4822-812B-4A1F089031C0} = {351F6BF4-552A-46CD-852E-1AB2D3430B75}
 		{6A01FC05-9358-F3E8-83CD-3D1608DF4C68} = {36D591C7-65C7-A0D1-1CBC-10CDE441BDC8}
+		{97327E33-EDCB-48F1-BCDE-D8F3DA254F47} = {36D591C7-65C7-A0D1-1CBC-10CDE441BDC8}
+		{17B778E9-3DBA-47B9-A7C7-16B1468EC4C7} = {97327E33-EDCB-48F1-BCDE-D8F3DA254F47}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C566600F-DF5F-4393-A077-6B165240D5A5}

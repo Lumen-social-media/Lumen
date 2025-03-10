@@ -1,7 +1,10 @@
-﻿using Lumen.Identity.Application.User.Consumers;
-using Lumen.Identity.Infrastructure.User;
-using MassTransit;
-using Microsoft.AspNetCore.Identity;
+﻿using Lumen.Identity.Application.Common.Caching;
+using Lumen.Identity.Application.Common.EventBus;
+using Lumen.Identity.Application.Users.Cache;
+using Lumen.Identity.Infrastructure.Common.Caching;
+using Lumen.Identity.Infrastructure.Common.EventBus;
+using Lumen.Identity.Infrastructure.Users.Cache;
+using Lumen.Identity.UseCase.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -15,27 +18,21 @@ public static class InfrastructureServiceCollectionExtensions
         {
             config.UseNpgsql(options.ConnectionString);
         });
+        services.AddScoped<IApplicationDbContext, LumenDbContext>();
 
-        services.AddIdentity<InfrastructureUser, IdentityRole<int>>()
-            .AddDefaultTokenProviders()
-            .AddEntityFrameworkStores<LumenDbContext>();
-
-
-        services.AddMassTransit(x =>
+        services.Configure<InfrastructureOptions>(cfg =>
         {
-            x.AddConsumers(typeof(UserCreateMessageConsumer).Assembly);
-
-            x.UsingRabbitMq((context, cfg) =>
-            {
-                cfg.Host(options.RabbitMQHost, h =>
-                {
-                    h.Username(options.RabbitMQUserName);
-                    h.Password(options.RabbitMQPassword);
-                });
-
-                cfg.ConfigureEndpoints(context);
-            });
+            cfg = options;
         });
+        services.AddScoped<IEventBus, RabbitMQEventBus>();
+
+        services.AddStackExchangeRedisCache(cfg =>
+        {
+            cfg.Configuration = options.RedisHost;
+            cfg.InstanceName = options.RedisInstanceName;
+        });
+        services.AddScoped<ICache, RedisDistributedCache>();
+        services.AddScoped<IUserCache, UserRedisDistributedCache>();
 
         return services;
     }

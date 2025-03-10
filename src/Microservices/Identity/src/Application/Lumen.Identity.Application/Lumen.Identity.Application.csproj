@@ -7,16 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="User\Queries\" />
+    <Compile Remove="Users\Queries\**" />
+    <EmbeddedResource Remove="Users\Queries\**" />
+    <None Remove="Users\Queries\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MassTransit" Version="8.3.6" />
     <PackageReference Include="MediatR" Version="12.4.1" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.6.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Domain\Lumen.Identity.Domain\Lumen.Identity.Domain.csproj" />
+    <ProjectReference Include="..\..\UseCase\Lumen.Identity.UseCase\Lumen.Identity.UseCase.csproj" />
   </ItemGroup>
 
 </Project>

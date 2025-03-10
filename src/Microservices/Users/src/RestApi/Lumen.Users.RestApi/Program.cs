@@ -23,6 +23,15 @@ services.AddTransient(s => s.GetService<HttpContext>()!.User);
 
 var app = builder.Build();
 
+app.UseCors(options =>
+{
+    options.WithOrigins(configuration.GetSection("Cors").Get<string[]>()!)
+        .AllowCredentials()
+        .AllowAnyMethod()
+        .AllowAnyHeader()
+        .SetIsOriginAllowed(options => true);
+});
+
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();

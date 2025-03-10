@@ -1,11 +1,12 @@
-﻿using Lumen.Users.UseCases;
+﻿using Lumen.Users.Domain.Aggregates.Users.ValueObjects;
+using Lumen.Users.UseCases;
 using Mapster;
 
 namespace Lumen.Users.Application.Aggregates.Users.Commands;
 
 public sealed class DeleteUserByIdCommand : ICommand<UserResponse>
 {
-    public required int Id { get; set; }
+    public required UserId Id { get; set; }
 }
 
 public sealed class DeleteUserByIdCommandHandler(IApplicationContext context) : ICommandHandler<DeleteUserByIdCommand, UserResponse>

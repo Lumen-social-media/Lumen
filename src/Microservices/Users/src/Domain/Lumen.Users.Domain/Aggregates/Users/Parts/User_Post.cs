@@ -19,7 +19,7 @@ public sealed partial class User
     public Post RemovePost(Post post)
     {
         posts.Remove(post);
-
+        
         return post;
     }
 

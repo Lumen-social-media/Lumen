@@ -1,9 +1,20 @@
-﻿using Lumen.Identity.Infrastructure.User;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Lumen.Identity.Domain.Users;
+using Lumen.Identity.UseCase.Common;
+using Microsoft.EntityFrameworkCore;
 
 namespace Lumen.Identity.Infrastructure.Common;
 
-public sealed class LumenDbContext : IdentityDbContext<InfrastructureUser, IdentityRole<int>, int>
+public sealed class LumenDbContext : DbContext, IApplicationDbContext
 {
+    public DbSet<User> Users { get; set; }
+
+    public LumenDbContext(DbContextOptions<LumenDbContext> options) : base(options)
+    {
+
+    }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(LumenDbContext).Assembly);
+    }
 }

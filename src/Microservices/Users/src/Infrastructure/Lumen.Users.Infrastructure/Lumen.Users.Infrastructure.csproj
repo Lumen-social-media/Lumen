@@ -13,11 +13,11 @@
 
   <ItemGroup>
     <Folder Include="Aggregates\Communities\Entities\" />
-    <Folder Include="Aggregates\Users\Consumers\" />
     <Folder Include="Aggregates\Users\Entities\" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Common\Lumen.Common\Lumen.Common.csproj" />
     <ProjectReference Include="..\..\Application\Lumen.Users.Application\Lumen.Users.Application.csproj" />
   </ItemGroup>
 
