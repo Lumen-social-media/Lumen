@@ -19,6 +19,7 @@ public sealed class LoginUserWithJwtCommandHandler(IApplicationDbContext context
                                                    JwtFactory jwtFactory,
                                                    ClaimsFactory claimsFactory,
                                                    RefreshTokenGenerator refreshTokenGenerator,
+                                                   PasswordHasher passwordHasher,
                                                    ICache cache) : ICommandHandler<LoginUserWithJwtCommand, AccessTokenResponse>
 {
     public async Task<AccessTokenResponse> Handle(LoginUserWithJwtCommand command, CancellationToken cancellationToken)
@@ -27,11 +28,18 @@ public sealed class LoginUserWithJwtCommandHandler(IApplicationDbContext context
         var user = await context.Users.FindByEmailAsync(email, cancellationToken)
             ?? throw new UserNotFoundException(command.Email);
 
+        if (user.PasswordHash != passwordHasher.Hash(command.Password))
+            throw new UnauthorizedAccessException();
+
         var claims = claimsFactory.Create(user);
         var jwtToken = jwtFactory.Create(claims);
-        var refreshToken = refreshTokenGenerator.Create();
+        var refreshToken = await cache.GetStringAsync($"user:{user.Id}:refresh-token", cancellationToken);
 
-        await cache.SetStringAsync($"user:{refreshToken}", user.Id.ToString());
+        if (refreshToken is null)
+        {
+            refreshToken = refreshTokenGenerator.Create();
+            await cache.SetStringAsync($"user:{user.Id}:refresh-token", refreshToken);
+        }
 
         var response = new AccessTokenResponse
         {

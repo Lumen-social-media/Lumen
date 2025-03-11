@@ -4,9 +4,9 @@ using Lumen.Identity.Domain.Users;
 namespace Lumen.Identity.Application.Users.Messages;
 
 [method: SetsRequiredMembers]
-public sealed class UserRegisteredMessage(int id, string userName, string name, string surname, string email, string lastName, string about, string avatarUrl, DateOnly? birthDate, DateTime registrationDate, DateTime lastLoginAt, string hometown, Language language, MaritalStatus maritalStatus, string currentCity, string personalSite, Gender gender, string schoolName, bool hasPublicProfile)
+public sealed class UserRegisteredMessage(Guid id, string userName, string name, string surname, string email, string lastName, string about, string avatarUrl, DateOnly? birthDate, DateTime registrationDate, DateTime lastLoginAt, string hometown, Language language, MaritalStatus maritalStatus, string currentCity, string personalSite, Gender gender, string schoolName, bool hasPublicProfile)
 {
-    public int Id { get; set; } = id;
+    public Guid Id { get; set; } = id;
     public required string UserName { get; set; } = userName;
     public required string Name { get; set; } = name;
     public required string Surname { get; set; } = surname;

@@ -3,6 +3,7 @@ using Lumen.Identity.Application.Common.Auth;
 using Lumen.Identity.Application.Common.Auth.Jwt;
 using Lumen.Identity.Application.Common.Caching;
 using Lumen.Identity.Application.Common.Extensions;
+using Lumen.Identity.Application.Users.Cache;
 using Lumen.Identity.Application.Users.Exceptions;
 using Lumen.Identity.UseCase.Common;
 using Lumen.Identity.UseCase.Users.Extensions;
@@ -19,6 +20,7 @@ public sealed record RefreshUserTokenCommand : ICommand<AccessTokenResponse>
 
 public sealed class RefreshUserTokenCommandHandler(IApplicationDbContext context,
                                                    ICache cache,
+                                                   IUserCache userCache,
                                                    JwtFactory jwtFactory,
                                                    ClaimsFactory claimsFactory,
                                                    RefreshTokenGenerator refreshTokenGenerator,
@@ -26,20 +28,22 @@ public sealed class RefreshUserTokenCommandHandler(IApplicationDbContext context
 {
     public async Task<AccessTokenResponse> Handle(RefreshUserTokenCommand command, CancellationToken cancellationToken)
     {
-        var principal = new JwtSecurityTokenHandler().ValidateToken(command.AccessToken, paramsFactory.Create(), out SecurityToken validatedToken);
+        var principal = new JwtSecurityTokenHandler().ValidateToken(command.AccessToken, paramsFactory.CreateWithoutLifeTimeValidation(), out SecurityToken validatedToken);
         var userIdFromAccessToken = principal.ExtractUserId();
+
+        var cachedRefreshToken = await cache.GetStringAsync($"user:{userIdFromAccessToken}:refresh-token", cancellationToken)
+            ?? throw new UnauthorizedAccessException();
 
         var user = await context.Users.FindByIdAsync(userIdFromAccessToken, cancellationToken)
             ?? throw new UserNotFoundException("not found.");
 
         var claims = claimsFactory.Create(user);
         var accessToken = jwtFactory.Create(claims);
-        var refreshToken = refreshTokenGenerator.Create();
 
         var response = new AccessTokenResponse
         {
             AccessToken = accessToken,
-            RefreshToken = refreshToken
+            RefreshToken = cachedRefreshToken
         };
 
         return response;

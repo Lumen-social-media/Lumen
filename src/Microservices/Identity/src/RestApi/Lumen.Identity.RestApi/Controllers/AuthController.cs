@@ -30,14 +30,8 @@ public class AuthController(IMediator mediator) : ControllerBase
 
     [HttpPost("refresh")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AccessTokenResponse))]
-    public async Task<ActionResult<AccessTokenResponse>> RefreshToken(CancellationToken cancellationToken)
+    public async Task<ActionResult<AccessTokenResponse>> RefreshToken([FromBody] RefreshUserTokenCommand command, CancellationToken cancellationToken)
     {
-        HttpContext.Request.Headers.TryGetValue("X-Refresh-token", out StringValues refreshToken);
-
-        var accessToken = HttpContext.Request.Headers.Authorization.ToString();
-        var token = refreshToken.ToString();
-        var command = new RefreshUserTokenCommand { AccessToken = accessToken, RefreshToken = token };
-
         var response = await mediator.Send(command, cancellationToken);
 
         return Ok(response);

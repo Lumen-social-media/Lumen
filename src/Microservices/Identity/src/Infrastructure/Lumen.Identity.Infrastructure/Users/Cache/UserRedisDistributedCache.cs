@@ -7,9 +7,9 @@ namespace Lumen.Identity.Infrastructure.Users.Cache;
 
 public sealed class UserRedisDistributedCache(IDistributedCache cache) : IUserCache
 {
-    public async Task<User?> GetAsync(string key, CancellationToken cancellationToken = default)
+    public async Task<User?> GetByIdAsync(string id, CancellationToken cancellationToken = default)
     {
-        var result = await cache.GetStringAsync(key, cancellationToken);
+        var result = await cache.GetStringAsync(id, cancellationToken);
 
         if (result is null) return null;
 
@@ -21,12 +21,10 @@ public sealed class UserRedisDistributedCache(IDistributedCache cache) : IUserCa
         await cache.RemoveAsync(key, cancellationToken);
     }
 
-    public async Task SetAsync(User entity, CancellationToken cancellationToken = default)
+    public async Task SetByIdAsync(User entity, CancellationToken cancellationToken = default)
     {
         var options = new DistributedCacheEntryOptions();
         var serializedUser = JsonSerializer.Serialize(entity);
         await cache.SetStringAsync($"user:{entity.Id}", serializedUser, cancellationToken);
-
-        throw new NotImplementedException();
     }
 }

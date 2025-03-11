@@ -24,6 +24,7 @@ public sealed class RegisterUserWithJwtCommand : ICommand<AccessTokenResponse>
     public required string Name { get; set; }
     public required string Surname { get; set; }
     public required string Email { get; set; }
+    public required string Password { get; set; }
     public string LastName { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public string AvatarUrl { get; set; } = string.Empty;
@@ -38,12 +39,12 @@ public sealed class RegisterUserWithJwtCommand : ICommand<AccessTokenResponse>
     public bool HasPublicProfile { get; set; }
 }
 
-
 public sealed class RegisterUserWithJwtCommandHandler(IApplicationDbContext context,
                                                       IEventBus bus,
                                                       JwtFactory jwtFactory,
                                                       ClaimsFactory claimsFactory,
                                                       RefreshTokenGenerator refreshTokenGenerator,
+                                                      PasswordHasher passwordHasher,
                                                       ICache cache,
                                                       IUserCache userCache) : ICommandHandler<RegisterUserWithJwtCommand, AccessTokenResponse>
 {
@@ -61,9 +62,10 @@ public sealed class RegisterUserWithJwtCommandHandler(IApplicationDbContext cont
         var accessToken = jwtFactory.Create(claims);
         var refreshToken = refreshTokenGenerator.Create();
 
-        await cache.SetStringAsync($"user:{refreshToken}", user.Id.ToString());
+        await userCache.SetByIdAsync(user, cancellationToken);
+        await cache.SetStringAsync($"user:{user.Id}:refresh-token", refreshToken);
         await context.SaveChangesAsync(cancellationToken);
-        
+
         var response = new AccessTokenResponse
         {
             AccessToken = accessToken,
@@ -84,10 +86,17 @@ public sealed class RegisterUserWithJwtCommandHandler(IApplicationDbContext cont
         var lastName = LastName.Create(command.LastName);
         var email = Email.Create(command.Email);
         var about = About.Create(command.Description, command.AvatarUrl, command.Hometown, command.BirthDate, command.Language, command.MaritalStatus, command.CurrentCity, command.PersonalSite, command.Gender, command.SchoolName, command.HasPublicProfile);
-        var user = User.Create(userName, name, surname, lastName, email, about);
+        var passwordHash = HashPassword(command.Password);
+        var user = User.Create(userName, name, surname, lastName, email, about, passwordHash);
         var createdUser = await context.Users.AddAsync(user, cancellationToken);
-        user = createdUser.Entity;
 
-        return user;
+        return createdUser.Entity;
+    }
+
+    private string HashPassword(string password)
+    {
+        var pass = passwordHasher.Hash(password);
+
+        return pass;
     }
 }

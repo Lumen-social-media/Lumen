@@ -8,23 +8,41 @@ using Lumen.Identity.Domain.Users.ValueObjects.UserName;
 
 namespace Lumen.Identity.Domain.Users;
 
-public sealed class User(UserName userName, Name name, Surname surname, LastName lastName, Email email, About about) : IEntity<int>
+public sealed class User : IEntity<Guid>
 {
-    public int Id { get; set; }
-    public UserName UserName { get; set; } = userName;
-    public Name Name { get; set; } = name;
-    public Surname Surname { get; set; } = surname;
-    public LastName LastName { get; set; } = lastName;
-    public Email Email { get; set; } = email;
-    public About About { get; set; } = about;
+    public Guid Id { get; set; } = Guid.NewGuid();
+    public UserName UserName { get; set; }
+    public Name Name { get; set; }
+    public Surname Surname { get; set; }
+    public LastName LastName { get; set; }
+    public Email Email { get; set; }
+    public About About { get; set; }
+
+    public string PasswordHash { get; set; }
 
     public DateTime RegistrationDate { get; set; } = DateTime.UtcNow;
     public DateTime LastLoginAt { get; set; } = DateTime.UtcNow;
-    
-    public static User Create(UserName userName, Name name, Surname surname, LastName lastName, Email email, About about)
+
+    private User(UserName userName, Name name, Surname surname, LastName lastName, Email email, About about, string passwordHash)
     {
-        var user = new User(userName, name, surname, lastName, email, about);
-        
+        UserName = userName;
+        Name = name;
+        Surname = surname;
+        LastName = lastName;
+        Email = email;
+        About = about;
+        PasswordHash = passwordHash;
+    }
+
+    private User()
+    {
+
+    }
+
+    public static User Create(UserName userName, Name name, Surname surname, LastName lastName, Email email, About about, string passwordHash)
+    {
+        var user = new User(userName, name, surname, lastName, email, about, passwordHash);
+
         user.UserName.Validate();
         user.Email.Validate();
         user.Name.Validate();

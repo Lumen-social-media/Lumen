@@ -10,12 +10,12 @@ public static class UserDbSetExtensions
     {
         var user = await dbSet
             .Where(b => b.Email.Value == email.Value)
-            .FirstOrDefaultAsync();
+            .FirstOrDefaultAsync(cancellationToken);
 
         return user;
     }
 
-    public static async Task<User?> FindByIdAsync(this DbSet<User> dbSet, int id, CancellationToken cancellationToken = default)
+    public static async Task<User?> FindByIdAsync(this DbSet<User> dbSet, Guid id, CancellationToken cancellationToken = default)
     {
         var user = await dbSet.FindAsync([id], cancellationToken);
 

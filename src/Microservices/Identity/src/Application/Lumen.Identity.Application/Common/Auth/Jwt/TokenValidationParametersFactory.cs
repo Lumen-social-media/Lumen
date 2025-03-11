@@ -19,5 +19,20 @@ public sealed class TokenValidationParametersFactory(IOptions<JwtOptions> option
             RequireExpirationTime = true
         };
     }
+
+    public TokenValidationParameters CreateWithoutLifeTimeValidation()
+    {
+        return new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(options.Value.SecretKey)),
+            ValidateIssuer = true,
+            ValidIssuer = options.Value.Issuer,
+            ValidateAudience = true,
+            ValidAudience = options.Value.Audience,
+            ValidateLifetime = false,
+            RequireExpirationTime = false
+        };
+    }
 }
 

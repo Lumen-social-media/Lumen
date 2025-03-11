@@ -15,8 +15,10 @@ public sealed class JwtFactory(IOptions<JwtOptions> jwtOptions)
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.SecretKey));
 
         var jwtToken = new JwtSecurityToken(claims: claims,
-            expires: _jwtOptions.Expires,
-            signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256)
+            expires: DateTime.UtcNow.AddMinutes(_jwtOptions.ExpiresInMinutes),
+            signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256),
+            issuer: _jwtOptions.Issuer,
+            audience: _jwtOptions.Audience
             );
 
         return new JwtSecurityTokenHandler().WriteToken(jwtToken);

@@ -8,33 +8,23 @@ var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
 var services = builder.Services;
 
-var infrastructureOptions = new InfrastructureOptions
-{
-    ConnectionString = builder.Configuration.GetConnectionString("PostgreSQL"),
-    RedisHost = config.GetConnectionString("Redis"),
-    RedisInstanceName = config.GetConnectionString("RedisInstanceName"),
-    RabbitMQHost = builder.Configuration["RabbitMQ:Host"] ?? "localhost",
-    RabbitMQPassword = builder.Configuration["RabbitMQ:Password"] ?? "guest",
-    RabbitMQUserName = builder.Configuration["RabbitMQ:Username"] ?? "guest"
-};
-services.AddInfrastructure(infrastructureOptions);
-services.AddApplication();
-
 var jwtOptions = new JwtOptions
 {
     Audience = config["Jwt:Audience"] ?? "localhost",
     Issuer = config["Jwt:Issuer"] ?? "localhost",
-    Expires = new DateTime().AddMinutes(double.Parse(config["Jwt:ExpiresFromMinutes"] ?? "5")),
+    ExpiresInMinutes = int.Parse(config["Jwt:ExpiresFromMinutes"] ?? "5"),
     SecretKey = config["Jwt:SecretKey"] ?? "default"
 };
-
 
 services.AddControllers();
 services.AddOpenApi();
 services.AddTransient(s => s.GetService<HttpContext>()!.User);
 services.Configure<JwtOptions>(options =>
 {
-    options = jwtOptions;
+    options.Audience = jwtOptions.Audience;
+    options.Issuer = jwtOptions.Issuer;
+    options.ExpiresInMinutes = jwtOptions.ExpiresInMinutes;
+    options.SecretKey = jwtOptions.SecretKey;
 });
 
 services.AddAuthentication().AddJwtBearer(options =>
@@ -42,6 +32,28 @@ services.AddAuthentication().AddJwtBearer(options =>
     options.TokenValidationParameters = new TokenValidationParametersFactory(Options.Create(jwtOptions)).Create();
 });
 
+var infrastructureOptions = new InfrastructureOptions
+{
+    ConnectionString = config.GetConnectionString("PostgreSQL"),
+    RedisHost = config.GetConnectionString("Redis"),
+    RedisInstanceName = config.GetConnectionString("RedisInstanceName"),
+    RabbitMQHost = config["RabbitMQ:Host"] ?? "localhost",
+    RabbitMQPassword = config["RabbitMQ:PasswordHash"] ?? "guest",
+    RabbitMQUserName = config["RabbitMQ:Username"] ?? "guest"
+};
+services.Configure<InfrastructureOptions>(options =>
+{
+    options.ConnectionString = config.GetConnectionString("PostgreSQL");
+    options.RedisHost = config.GetConnectionString("Redis");
+    options.RedisInstanceName = config.GetConnectionString("RedisInstanceName");
+    options.RabbitMQHost = config["RabbitMQ:Host"] ?? "localhost";
+    options.RabbitMQPassword = config["RabbitMQ:PasswordHash"] ?? "guest";
+    options.RabbitMQUserName = config["RabbitMQ:Username"] ?? "guest";
+});
+services.AddInfrastructure(infrastructureOptions);
+services.AddApplication();
+
+#region Middlewares
 var app = builder.Build();
 
 app.UseCors(options =>
@@ -52,6 +64,7 @@ app.UseCors(options =>
         .AllowAnyHeader()
         .SetIsOriginAllowed(options => true);
 });
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -67,3 +80,4 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+#endregion

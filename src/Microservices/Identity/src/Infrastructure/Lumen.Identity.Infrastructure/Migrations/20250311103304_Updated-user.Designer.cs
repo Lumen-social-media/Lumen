@@ -3,6 +3,7 @@ using System;
 using Lumen.Identity.Infrastructure.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Lumen.Identity.Infrastructure.Migrations
 {
     [DbContext(typeof(LumenDbContext))]
-    partial class LumenDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250311103304_Updated-user")]
+    partial class Updateduser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -133,8 +136,9 @@ namespace Lumen.Identity.Infrastructure.Migrations
 
                             b1.Property<string>("Value")
                                 .IsRequired()
+                                .ValueGeneratedOnUpdateSometimes()
                                 .HasColumnType("text")
-                                .HasColumnName("LastName");
+                                .HasColumnName("UserName");
 
                             b1.HasKey("UserId");
 
@@ -151,8 +155,9 @@ namespace Lumen.Identity.Infrastructure.Migrations
 
                             b1.Property<string>("Value")
                                 .IsRequired()
+                                .ValueGeneratedOnUpdateSometimes()
                                 .HasColumnType("text")
-                                .HasColumnName("Name");
+                                .HasColumnName("UserName");
 
                             b1.HasKey("UserId");
 
@@ -169,8 +174,9 @@ namespace Lumen.Identity.Infrastructure.Migrations
 
                             b1.Property<string>("Value")
                                 .IsRequired()
+                                .ValueGeneratedOnUpdateSometimes()
                                 .HasColumnType("text")
-                                .HasColumnName("Surname");
+                                .HasColumnName("UserName");
 
                             b1.HasKey("UserId");
 
@@ -187,6 +193,7 @@ namespace Lumen.Identity.Infrastructure.Migrations
 
                             b1.Property<string>("Value")
                                 .IsRequired()
+                                .ValueGeneratedOnUpdateSometimes()
                                 .HasColumnType("text")
                                 .HasColumnName("UserName");
 

@@ -19,7 +19,7 @@ public sealed class RabbitMQEventBus(IOptions<InfrastructureOptions> infrastruct
         using var connection = await factory.CreateConnectionAsync(cancellationToken);
         using var channel = await connection.CreateChannelAsync(cancellationToken: cancellationToken);
         await channel.QueueDeclareAsync(queue: typeof(TMessage).Name,
-                                        durable: false,
+                                        durable: true,
                                         exclusive: false,
                                         autoDelete: false,
                                         arguments: null,
@@ -27,7 +27,7 @@ public sealed class RabbitMQEventBus(IOptions<InfrastructureOptions> infrastruct
 
         var body = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(message));
 
-        await channel.BasicPublishAsync(exchange: "",
+        await channel.BasicPublishAsync(exchange: "User",
                                         routingKey: "",
                                         body: body,
                                         cancellationToken: cancellationToken);

@@ -17,6 +17,7 @@ public static class ApplicationServiceCollectionExtensions
         services.AddScoped<RefreshTokenGenerator>();
         services.AddScoped<JwtFactory>();
         services.AddScoped<TokenValidationParametersFactory>();
+        services.AddScoped<PasswordHasher>();
 
         return services;
     }

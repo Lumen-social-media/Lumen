@@ -10,6 +10,9 @@ public sealed class UserEntityTypeConfiguration : IEntityTypeConfiguration<User>
     {
         builder.HasKey(b => b.Id);
 
+        builder.Property(b => b.Id)
+            .IsRequired();
+
         builder.OwnsOne(b => b.UserName, navb =>
         {
             navb.HasIndex(b => b.Value);
@@ -18,17 +21,17 @@ public sealed class UserEntityTypeConfiguration : IEntityTypeConfiguration<User>
 
         builder.OwnsOne(b => b.Name, navb =>
         {
-            navb.Property(b => b.Value).HasColumnName("UserName");
+            navb.Property(b => b.Value).HasColumnName("Name");
         });
 
         builder.OwnsOne(b => b.Surname, navb =>
         {
-            navb.Property(b => b.Value).HasColumnName("UserName");
+            navb.Property(b => b.Value).HasColumnName("Surname");
         });
 
         builder.OwnsOne(b => b.LastName, navb =>
         {
-            navb.Property(b => b.Value).HasColumnName("UserName");
+            navb.Property(b => b.Value).HasColumnName("LastName");
         });
 
         builder.OwnsOne(b => b.Email, navb =>

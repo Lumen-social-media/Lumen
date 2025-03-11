@@ -10,7 +10,7 @@ public sealed class LumenDbContext : DbContext, IApplicationDbContext
 
     public LumenDbContext(DbContextOptions<LumenDbContext> options) : base(options)
     {
-
+        Database.EnsureCreated();
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
