@@ -1,9 +1,11 @@
 ﻿using Lumen.Identity.Application.Common.Caching;
 using Lumen.Identity.Application.Common.EventBus;
 using Lumen.Identity.Application.Users.Cache;
+using Lumen.Identity.Application.Users.Repositories;
 using Lumen.Identity.Infrastructure.Common.Caching;
 using Lumen.Identity.Infrastructure.Common.EventBus;
 using Lumen.Identity.Infrastructure.Users.Cache;
+using Lumen.Identity.Infrastructure.Users.Repositories;
 using Lumen.Identity.UseCase.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,6 +35,7 @@ public static class InfrastructureServiceCollectionExtensions
         });
         services.AddScoped<ICache, RedisDistributedCache>();
         services.AddScoped<IUserCache, UserRedisDistributedCache>();
+        services.AddScoped<IUserCachedRepository, UserCachedEfRepository>();
 
         return services;
     }

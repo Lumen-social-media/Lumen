@@ -38,7 +38,7 @@ public sealed class LoginUserWithJwtCommandHandler(IApplicationDbContext context
         if (refreshToken is null)
         {
             refreshToken = refreshTokenGenerator.Create();
-            await cache.SetStringAsync($"user:{user.Id}:refresh-token", refreshToken);
+            await cache.SetStringAsync($"user:{user.Id}:refresh-token", refreshToken, 10080, cancellationToken);
         }
 
         var response = new AccessTokenResponse

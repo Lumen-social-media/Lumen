@@ -1,15 +1,19 @@
 ﻿using Lumen.Identity.Application.Common.Caching;
 using Microsoft.Extensions.Caching.Distributed;
+using System.Threading.Tasks;
 
 namespace Lumen.Identity.Infrastructure.Common.Caching;
 
 public sealed class RedisDistributedCache(IDistributedCache cache) : ICache
 {
-    public async Task SetStringAsync(string key, string value)
+    public async Task SetStringAsync(string key, string value, double expirationMinutes, CancellationToken cancellationToken = default)
     {
-        var options = new DistributedCacheEntryOptions();
+        var options = new DistributedCacheEntryOptions()
+        {
+            AbsoluteExpiration = DateTimeOffset.UtcNow.AddMinutes(expirationMinutes)
+        };
 
-        await cache.SetStringAsync(key, value, options);
+        await cache.SetStringAsync(key, value, options, cancellationToken);
     }
 
     public async Task<string?> GetStringAsync(string key, CancellationToken cancellationToken = default)
@@ -19,8 +23,8 @@ public sealed class RedisDistributedCache(IDistributedCache cache) : ICache
         return value;
     }
 
-    public string Remove(string key)
+    public async Task Remove(string key, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        await cache.RemoveAsync(key, cancellationToken);
     }
 }

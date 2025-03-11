@@ -3,6 +3,6 @@
 public interface ICache
 {
     public Task<string?> GetStringAsync(string key, CancellationToken cancellationToken = default);
-    public string Remove(string key);
-    public Task SetStringAsync(string key, string value);
+    public Task Remove(string key, CancellationToken cancellationToken = default);
+    public Task SetStringAsync(string key, string value, double expirationMinutes, CancellationToken cancellationToken = default);
 }

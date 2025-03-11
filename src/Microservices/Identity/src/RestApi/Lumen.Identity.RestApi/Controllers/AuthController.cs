@@ -1,7 +1,6 @@
 ﻿using Lumen.Identity.Application.Users.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Primitives;
 
 namespace Lumen.Identity.RestApi.Controllers;
 

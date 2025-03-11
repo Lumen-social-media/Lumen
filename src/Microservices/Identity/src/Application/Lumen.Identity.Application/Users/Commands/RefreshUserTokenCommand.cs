@@ -20,10 +20,8 @@ public sealed record RefreshUserTokenCommand : ICommand<AccessTokenResponse>
 
 public sealed class RefreshUserTokenCommandHandler(IApplicationDbContext context,
                                                    ICache cache,
-                                                   IUserCache userCache,
                                                    JwtFactory jwtFactory,
                                                    ClaimsFactory claimsFactory,
-                                                   RefreshTokenGenerator refreshTokenGenerator,
                                                    TokenValidationParametersFactory paramsFactory) : ICommandHandler<RefreshUserTokenCommand, AccessTokenResponse>
 {
     public async Task<AccessTokenResponse> Handle(RefreshUserTokenCommand command, CancellationToken cancellationToken)
