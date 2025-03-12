@@ -3,7 +3,6 @@ using Lumen.Identity.Application.Common.Auth;
 using Lumen.Identity.Application.Common.Auth.Jwt;
 using Lumen.Identity.Application.Common.Caching;
 using Lumen.Identity.Application.Common.Extensions;
-using Lumen.Identity.Application.Users.Cache;
 using Lumen.Identity.Application.Users.Exceptions;
 using Lumen.Identity.UseCase.Common;
 using Lumen.Identity.UseCase.Users.Extensions;

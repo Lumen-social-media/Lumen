@@ -14,7 +14,7 @@ public sealed record About : ValueObject
     public string PersonalSite { get; set; } = string.Empty;
     public Gender Gender { get; set; } = Gender.NotSet;
     public string SchoolName { get; set; } = string.Empty;
-    public bool HasPublicProfile { get; set; }
+    public bool HasPublicProfile { get; set; } = true;
 
     public About(string description,
              string avatarUrl,

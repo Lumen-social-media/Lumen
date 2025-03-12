@@ -3,17 +3,11 @@ using Lumen.Identity.Application.Common.Auth;
 using Lumen.Identity.Application.Common.Auth.Jwt;
 using Lumen.Identity.Application.Common.Caching;
 using Lumen.Identity.Application.Common.EventBus;
-using Lumen.Identity.Application.Users.Cache;
 using Lumen.Identity.Application.Users.Exceptions;
-using Lumen.Identity.Application.Users.Messages;
+using Lumen.Identity.Application.Users.Mappers.Extensions;
 using Lumen.Identity.Application.Users.Repositories;
 using Lumen.Identity.Domain.Users;
-using Lumen.Identity.Domain.Users.ValueObjects.About;
 using Lumen.Identity.Domain.Users.ValueObjects.Email;
-using Lumen.Identity.Domain.Users.ValueObjects.LastName;
-using Lumen.Identity.Domain.Users.ValueObjects.Name;
-using Lumen.Identity.Domain.Users.ValueObjects.Surname;
-using Lumen.Identity.Domain.Users.ValueObjects.UserName;
 using Lumen.Identity.UseCase.Common;
 using Lumen.Identity.UseCase.Users.Extensions;
 
@@ -62,8 +56,9 @@ public sealed class RegisterUserWithJwtCommandHandler(IApplicationDbContext cont
         var claims = claimsFactory.Create(user);
         var accessToken = jwtFactory.Create(claims);
         var refreshToken = refreshTokenGenerator.Create();
+        var sevenDaysInMinutes = 10080;
 
-        await cache.SetStringAsync($"user:{user.Id}:refresh-token", refreshToken, 10080);
+        await cache.SetStringAsync($"user:{user.Id}:refresh-token", refreshToken, sevenDaysInMinutes, cancellationToken);
         await context.SaveChangesAsync(cancellationToken);
 
         var response = new AccessTokenResponse
@@ -72,7 +67,7 @@ public sealed class RegisterUserWithJwtCommandHandler(IApplicationDbContext cont
             RefreshToken = refreshToken
         };
 
-        var message = CreateUserRegisteredMessage(user);
+        var message = user.ToUserRegisteredMessage();
 
         await bus.PublishAsync(message, cancellationToken);
 
@@ -81,48 +76,11 @@ public sealed class RegisterUserWithJwtCommandHandler(IApplicationDbContext cont
 
     private async Task<User> CreateUser(RegisterUserWithJwtCommand command, CancellationToken cancellationToken = default)
     {
-        var userName = UserName.Create(command.UserName);
-        var name = Name.Create(command.Name);
-        var surname = Surname.Create(command.Surname);
-        var lastName = LastName.Create(command.LastName);
-        var email = Email.Create(command.Email);
-        var about = About.Create(command.Description, command.AvatarUrl, command.Hometown, command.BirthDate, command.Language, command.MaritalStatus, command.CurrentCity, command.PersonalSite, command.Gender, command.SchoolName, command.HasPublicProfile);
-        var passwordHash = HashPassword(command.Password);
-        var user = User.Create(userName, name, surname, lastName, email, about, passwordHash);
+        var passwordHash = passwordHasher.Hash(command.Password);
+        var user = command.ToUser(passwordHash);
         var createdUser = await cachedRepository.AddAsync(user, cancellationToken);
 
         return createdUser;
     }
 
-    private string HashPassword(string password)
-    {
-        var pass = passwordHasher.Hash(password);
-
-        return pass;
-    }
-
-    private UserRegisteredMessage CreateUserRegisteredMessage(User user)
-    {
-        var message = new UserRegisteredMessage(user.Id,
-                                                user.UserName.Value,
-                                                user.Name.Value,
-                                                user.Surname.Value,
-                                                user.Email.Value,
-                                                user.LastName.Value,
-                                                user.About.Description,
-                                                user.About.AvatarUrl,
-                                                user.About.BirthDate,
-                                                user.RegistrationDate,
-                                                user.LastLoginAt,
-                                                user.About.Hometown,
-                                                user.About.Language,
-                                                user.About.MaritalStatus,
-                                                user.About.CurrentCity,
-                                                user.About.PersonalSite,
-                                                user.About.Gender,
-                                                user.About.SchoolName,
-                                                user.About.HasPublicProfile);
-
-        return message;
-    }
 }

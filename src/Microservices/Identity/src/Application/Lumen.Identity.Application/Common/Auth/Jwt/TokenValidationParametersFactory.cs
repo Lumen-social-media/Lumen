@@ -20,6 +20,10 @@ public sealed class TokenValidationParametersFactory(IOptions<JwtOptions> option
         };
     }
 
+    /// <summary>
+    /// It needs for token validation in <see cref="Users.Commands.RefreshUserTokenCommand"/> to extract user id from token and don't validate expiration time
+    /// </summary>
+    /// <returns></returns>
     public TokenValidationParameters CreateWithoutLifeTimeValidation()
     {
         return new TokenValidationParameters

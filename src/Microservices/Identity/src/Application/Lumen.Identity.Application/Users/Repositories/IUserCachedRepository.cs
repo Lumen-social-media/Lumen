@@ -1,5 +1,4 @@
 ﻿using Lumen.Identity.Domain.Users;
-using Lumen.Identity.Domain.Users.ValueObjects.Email;
 
 namespace Lumen.Identity.Application.Users.Repositories;
 

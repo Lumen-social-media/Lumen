@@ -1,6 +1,5 @@
 ﻿using Lumen.Identity.Application.Common.Caching;
 using Microsoft.Extensions.Caching.Distributed;
-using System.Threading.Tasks;
 
 namespace Lumen.Identity.Infrastructure.Common.Caching;
 
@@ -19,6 +18,7 @@ public sealed class RedisDistributedCache(IDistributedCache cache) : ICache
     public async Task<string?> GetStringAsync(string key, CancellationToken cancellationToken = default)
     {
         var value = await cache.GetStringAsync(key, cancellationToken);
+
 
         return value;
     }

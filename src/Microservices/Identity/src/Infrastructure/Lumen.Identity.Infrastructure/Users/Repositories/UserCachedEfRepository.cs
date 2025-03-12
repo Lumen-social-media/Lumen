@@ -1,7 +1,6 @@
 ﻿using Lumen.Identity.Application.Common.Caching;
 using Lumen.Identity.Application.Users.Repositories;
 using Lumen.Identity.Domain.Users;
-using Lumen.Identity.Domain.Users.ValueObjects.Email;
 using Lumen.Identity.UseCase.Common;
 using System.Text.Json;
 

@@ -33,7 +33,7 @@ namespace Lumen.Identity.Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("About")
+                    b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("text");
 

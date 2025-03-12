@@ -46,7 +46,7 @@ namespace Lumen.Identity.Infrastructure.Migrations
 
             modelBuilder.Entity("Lumen.Identity.Domain.Users.User", b =>
                 {
-                    b.OwnsOne("Lumen.Identity.Domain.Users.ValueObjects.About.About", "About", b1 =>
+                    b.OwnsOne("Lumen.Identity.Domain.Users.ValueObjects.Description.Description", "Description", b1 =>
                         {
                             b1.Property<int>("UserId")
                                 .HasColumnType("integer");
@@ -203,7 +203,7 @@ namespace Lumen.Identity.Infrastructure.Migrations
                                 .HasForeignKey("UserId");
                         });
 
-                    b.Navigation("About")
+                    b.Navigation("Description")
                         .IsRequired();
 
                     b.Navigation("Email")

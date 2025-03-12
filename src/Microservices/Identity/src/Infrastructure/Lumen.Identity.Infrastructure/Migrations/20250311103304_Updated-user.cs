@@ -11,7 +11,7 @@ namespace Lumen.Identity.Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "About",
+                name: "Description",
                 table: "Users");
 
             migrationBuilder.DropColumn(
@@ -55,7 +55,7 @@ namespace Lumen.Identity.Infrastructure.Migrations
                 newName: "Surname");
 
             migrationBuilder.AddColumn<string>(
-                name: "About",
+                name: "Description",
                 table: "Users",
                 type: "text",
                 nullable: false,

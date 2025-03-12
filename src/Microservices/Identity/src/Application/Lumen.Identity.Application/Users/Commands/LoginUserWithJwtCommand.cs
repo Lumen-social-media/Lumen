@@ -29,7 +29,7 @@ public sealed class LoginUserWithJwtCommandHandler(IApplicationDbContext context
             ?? throw new UserNotFoundException(command.Email);
 
         if (user.PasswordHash != passwordHasher.Hash(command.Password))
-            throw new UnauthorizedAccessException();
+            throw new NotRightPasswordException(command.Password);
 
         var claims = claimsFactory.Create(user);
         var jwtToken = jwtFactory.Create(claims);
@@ -38,7 +38,8 @@ public sealed class LoginUserWithJwtCommandHandler(IApplicationDbContext context
         if (refreshToken is null)
         {
             refreshToken = refreshTokenGenerator.Create();
-            await cache.SetStringAsync($"user:{user.Id}:refresh-token", refreshToken, 10080, cancellationToken);
+            var sevenDaysInMinutes = 10080;
+            await cache.SetStringAsync($"user:{user.Id}:refresh-token", refreshToken, sevenDaysInMinutes, cancellationToken);
         }
 
         var response = new AccessTokenResponse
