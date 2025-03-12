@@ -21,6 +21,7 @@ public sealed class RefreshUserTokenCommandHandler(IApplicationDbContext context
                                                    ICache cache,
                                                    JwtFactory jwtFactory,
                                                    ClaimsFactory claimsFactory,
+                                                   RefreshTokenGenerator refreshGenerator,
                                                    TokenValidationParametersFactory paramsFactory) : ICommandHandler<RefreshUserTokenCommand, AccessTokenResponse>
 {
     public async Task<AccessTokenResponse> Handle(RefreshUserTokenCommand command, CancellationToken cancellationToken)
@@ -30,6 +31,10 @@ public sealed class RefreshUserTokenCommandHandler(IApplicationDbContext context
 
         var cachedRefreshToken = await cache.GetStringAsync($"user:{userIdFromAccessToken}:refresh-token", cancellationToken)
             ?? throw new UnauthorizedAccessException();
+
+        cachedRefreshToken = refreshGenerator.Create();
+        var sevenDaysInMinutes = 10080;
+        await cache.SetStringAsync($"user:{userIdFromAccessToken}:refresh-token", cachedRefreshToken, sevenDaysInMinutes, cancellationToken);
 
         var user = await context.Users.FindByIdAsync(userIdFromAccessToken, cancellationToken)
             ?? throw new UserNotFoundException("not found.");

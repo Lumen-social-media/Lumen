@@ -8,6 +8,7 @@ using Lumen.Identity.Infrastructure.Users.Cache;
 using Lumen.Identity.Infrastructure.Users.Repositories;
 using Lumen.Identity.UseCase.Common;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Lumen.Identity.Infrastructure.Common.Extensions;
@@ -39,4 +40,30 @@ public static class InfrastructureServiceCollectionExtensions
 
         return services;
     }
+
+    public static InfrastructureOptions ConfigureInfrastructureOptions(this IServiceCollection services, IConfiguration config)
+    {
+        var infrastructureOptions = new InfrastructureOptions
+        {
+            ConnectionString = config.GetConnectionString("PostgreSQL"),
+            RedisHost = config.GetConnectionString("Redis"),
+            RedisInstanceName = config.GetConnectionString("RedisInstanceName"),
+            RabbitMQHost = config["RabbitMQ:Host"] ?? "localhost",
+            RabbitMQPassword = config["RabbitMQ:PasswordHash"] ?? "guest",
+            RabbitMQUserName = config["RabbitMQ:Username"] ?? "guest"
+        };
+        services.Configure<InfrastructureOptions>(options =>
+        {
+            options.ConnectionString = config.GetConnectionString("PostgreSQL");
+            options.RedisHost = config.GetConnectionString("Redis");
+            options.RedisInstanceName = config.GetConnectionString("RedisInstanceName");
+            options.RabbitMQHost = config["RabbitMQ:Host"] ?? "localhost";
+            options.RabbitMQPassword = config["RabbitMQ:PasswordHash"] ?? "guest";
+            options.RabbitMQUserName = config["RabbitMQ:Username"] ?? "guest";
+        });
+
+        return infrastructureOptions;
+    }
+
+
 }

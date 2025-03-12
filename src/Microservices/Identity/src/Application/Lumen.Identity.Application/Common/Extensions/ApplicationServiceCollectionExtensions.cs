@@ -1,5 +1,6 @@
 ﻿using Lumen.Identity.Application.Common.Auth;
 using Lumen.Identity.Application.Common.Auth.Jwt;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Lumen.Identity.Application.Common.Extensions;
@@ -20,5 +21,25 @@ public static class ApplicationServiceCollectionExtensions
         services.AddScoped<PasswordHasher>();
 
         return services;
+    }
+
+    public static JwtOptions ConfigureJwtOptions(this IServiceCollection services, IConfiguration config)
+    {
+        var jwtOptions = new JwtOptions
+        {
+            Audience = config["Jwt:Audience"] ?? "localhost",
+            Issuer = config["Jwt:Issuer"] ?? "localhost",
+            ExpiresInMinutes = int.Parse(config["Jwt:ExpiresFromMinutes"] ?? "5"),
+            SecretKey = config["Jwt:SecretKey"] ?? "default"
+        };
+        services.Configure<JwtOptions>(options =>
+        {
+            options.Audience = jwtOptions.Audience;
+            options.Issuer = jwtOptions.Issuer;
+            options.ExpiresInMinutes = jwtOptions.ExpiresInMinutes;
+            options.SecretKey = jwtOptions.SecretKey;
+        });
+
+        return jwtOptions;
     }
 }
