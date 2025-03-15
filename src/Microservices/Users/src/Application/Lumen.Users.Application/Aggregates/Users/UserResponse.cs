@@ -1,16 +1,16 @@
-﻿using Lumen.Users.Domain.Aggregates.Users;
+﻿using Lumen.Profile.Domain.Aggregates.Users;
 
-namespace Lumen.Users.Application.Aggregates.Users;
+namespace Lumen.Profile.Application.Aggregates.Users;
 
 public sealed record UserResponse
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     public required string UserName { get; set; }
     public required string Name { get; set; }
     public required string Surname { get; set; }
     public required string Email { get; set; }
     public string LastName { get; set; } = string.Empty;
-    public string About { get; set; } = string.Empty;
+    public string Description { get; set; } = string.Empty;
     public string AvatarUrl { get; set; } = string.Empty;
     public DateOnly? BirthDate { get; set; }
     public DateTime RegistrationDate { get; set; } = DateTime.UtcNow;

@@ -1,22 +1,20 @@
-﻿using Lumen.Users.Domain.Aggregates.Communities;
-using Lumen.Users.Domain.Aggregates.Users.Entities.PostImages;
-using Lumen.Users.Domain.Aggregates.Users.Entities.Posts.Dtos;
-using Lumen.Users.Domain.Aggregates.Users.Entities.RootComments;
-using Lumen.Users.Domain.Aggregates.Users.ValueObjects;
-using Lumen.Users.Domain.Common;
+﻿using Lumen.Profile.Domain.Aggregates.Communities;
+using Lumen.Profile.Domain.Aggregates.Users.Entities.PostImages;
+using Lumen.Profile.Domain.Aggregates.Users.Entities.RootComments;
+using Lumen.Profile.Domain.Common;
 
-namespace Lumen.Users.Domain.Aggregates.Users.Entities.Posts;
+namespace Lumen.Profile.Domain.Aggregates.Users.Entities.Posts;
 
-public sealed class Post : IEntity<int>
+public sealed class Post : IEntity<Guid>
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; } = Guid.NewGuid();
     public required string Body { get; set; }
 
     public Community? Community { get; set; }
-    public int CommunityId { get; set; }
+    public Guid? CommunityId { get; set; }
 
     public User Owner { get; set; } = default!;
-    public UserId OwnerId { get; set; }
+    public Guid OwnerId { get; set; }
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
@@ -28,19 +26,17 @@ public sealed class Post : IEntity<int>
 
     }
 
-    internal static Post Create(CreatePostDto dto)
+    internal static Post Create(string body, User owner, Community? community)
     {
         var post = new Post
         {
-            Body = dto.Body,
-            Owner = dto.Owner,
-            OwnerId = dto.Owner.Id,
-            Community = dto.Community,
-            CommunityId = dto.Community is null ? 0 : dto.Community.Id
+            Body = body,
+            Owner = owner,
+            OwnerId = owner.Id,
+            Community = community,
+            CommunityId = community?.Id
         };
 
         return post;
     }
-
-
 }

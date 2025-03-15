@@ -1,20 +1,18 @@
 ﻿using FluentValidation;
-using Lumen.Users.Domain.Aggregates.Users.Entities.PostImages.Dtos;
-using Lumen.Users.Domain.Aggregates.Users.Entities.Posts;
-using Lumen.Users.Domain.Aggregates.Users.ValueObjects;
-using Lumen.Users.Domain.Common;
+using Lumen.Profile.Domain.Aggregates.Users.Entities.Posts;
+using Lumen.Profile.Domain.Common;
 
-namespace Lumen.Users.Domain.Aggregates.Users.Entities.PostImages;
+namespace Lumen.Profile.Domain.Aggregates.Users.Entities.PostImages;
 
-public sealed class PostImage : IEntity<int>
+public sealed class PostImage : IEntity<Guid>
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; } = Guid.NewGuid();
 
     public Post Post { get; set; } = default!;
-    public int PostId { get; set; }
+    public Guid PostId { get; set; }
 
     public User Owner { get; set; } = default!;
-    public UserId OwnerId { get; set; }
+    public Guid OwnerId { get; set; }
 
     public required string Url { get; set; }
 
@@ -25,15 +23,15 @@ public sealed class PostImage : IEntity<int>
 
     }
 
-    public static PostImage Create(CreatePostImageDto dto)
+    public static PostImage Create(string url, User owner, Post post)
     {
         var image = new PostImage
         {
-            Url = dto.Url,
-            Owner = dto.Owner,
-            OwnerId = dto.Owner.Id,
-            Post = dto.Post,
-            PostId = dto.Post.Id
+            Url = url,
+            Owner = owner,
+            OwnerId = owner.Id,
+            Post = post,
+            PostId = post.Id
         };
 
         var validator = new PostImageValidator();

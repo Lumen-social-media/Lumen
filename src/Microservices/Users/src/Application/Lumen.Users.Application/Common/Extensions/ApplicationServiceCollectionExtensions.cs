@@ -3,7 +3,7 @@ using MapsterMapper;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
-namespace Lumen.Users.Application.Common.Extensions;
+namespace Lumen.Profile.Application.Common.Extensions;
 
 public static class ApplicationServiceCollectionExtensions
 {

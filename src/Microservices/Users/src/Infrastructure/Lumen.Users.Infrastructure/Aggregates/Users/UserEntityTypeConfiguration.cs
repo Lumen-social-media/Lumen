@@ -1,22 +1,15 @@
-﻿using Lumen.Users.Domain.Aggregates.Users;
-using Lumen.Users.Domain.Aggregates.Users.ValueObjects;
+﻿using Lumen.Profile.Domain.Aggregates.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Lumen.Users.Infrastructure.Aggregates.Users;
+namespace Lumen.Profile.Infrastructure.Aggregates.Users;
 
 public sealed class UserEntityTypeConfiguration : IEntityTypeConfiguration<User>
 {
     public void Configure(EntityTypeBuilder<User> builder)
     {
         builder.HasKey(b => b.Id);
-
-        builder.Property(b => b.Id)
-            .HasConversion(userId => userId.Value, id => UserId.Create(id));
-
-        builder.HasIndex(b => b.Email);
-        builder.HasIndex(b => b.UserName);
 
         builder.HasMany(b => b.CreatedCommunities)
             .WithOne(b => b.Owner)
@@ -57,13 +50,53 @@ public sealed class UserEntityTypeConfiguration : IEntityTypeConfiguration<User>
         builder.Navigation(b => b.PostImages)
             .UsePropertyAccessMode(PropertyAccessMode.Field);
 
-        builder.Property(b => b.Gender)
-            .HasConversion(new EnumToStringConverter<Gender>());
+        builder.OwnsOne(b => b.UserName, navb =>
+        {
+            navb.HasIndex(b => b.Value);
+            navb.Property(b => b.Value).HasColumnName("UserName");
+        });
 
-        builder.Property(b => b.Language)
-            .HasConversion(new EnumToStringConverter<Language>());
+        builder.OwnsOne(b => b.Name, navb =>
+        {
+            navb.Property(b => b.Value).HasColumnName("Name");
+        });
 
-        builder.Property(b => b.MaritalStatus)
-            .HasConversion(new EnumToStringConverter<MaritalStatus>());
+        builder.OwnsOne(b => b.Surname, navb =>
+        {
+            navb.Property(b => b.Value).HasColumnName("Surname");
+        });
+
+        builder.OwnsOne(b => b.LastName, navb =>
+        {
+            navb.Property(b => b.Value).HasColumnName("LastName");
+        });
+
+        builder.OwnsOne(b => b.Email, navb =>
+        {
+            navb.HasIndex(b => b.Value);
+            navb.Property(b => b.Value).HasColumnName("Email");
+        });
+
+        builder.OwnsOne(b => b.About, navb =>
+        {
+            navb.Property(b => b.Description).HasColumnName("Description");
+            navb.Property(b => b.AvatarUrl).HasColumnName("AvatarUrl");
+            navb.Property(b => b.Hometown).HasColumnName("Hometown");
+            navb.Property(b => b.BirthDate).HasColumnName("BirthDate");
+
+            navb.Property(b => b.Language).HasColumnName("Language")
+                .HasConversion(new EnumToStringConverter<Language>());
+
+            navb.Property(b => b.MaritalStatus).HasColumnName("MaritalStatus")
+                .HasConversion(new EnumToStringConverter<MaritalStatus>());
+
+            navb.Property(b => b.Gender).HasColumnName("Gender")
+                .HasConversion(new EnumToStringConverter<Gender>());
+
+            navb.Property(b => b.CurrentCity).HasColumnName("CurrentCity");
+            navb.Property(b => b.PersonalSite).HasColumnName("PersonalSite");
+            navb.Property(b => b.SchoolName).HasColumnName("SchoolName");
+            navb.Property(b => b.HasPublicProfile).HasColumnName("HasPublicProfile");
+        });
     }
 }

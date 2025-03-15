@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Lumen.Users.Domain.Aggregates.Users.Entities.Posts;
+namespace Lumen.Profile.Domain.Aggregates.Users.Entities.Posts;
 
 public sealed class PostValidator : AbstractValidator<Post>
 {

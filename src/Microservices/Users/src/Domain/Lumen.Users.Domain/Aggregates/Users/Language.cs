@@ -1,4 +1,4 @@
-﻿namespace Lumen.Users.Domain.Aggregates.Users;
+﻿namespace Lumen.Profile.Domain.Aggregates.Users;
 
 public enum Language : byte
 {

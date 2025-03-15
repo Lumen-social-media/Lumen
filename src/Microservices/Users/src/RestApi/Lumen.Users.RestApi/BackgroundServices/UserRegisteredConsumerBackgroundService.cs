@@ -1,10 +1,12 @@
-﻿
-namespace Lumen.Users.RestApi.BackgroundServices;
+﻿using Lumen.Profile.Infrastructure.Aggregates.Users.Messages.UserRegistered;
+using Lumen.Profile.Infrastructure.Common.EventBus;
 
-public sealed class UserRegisteredConsumerBackgroundService : BackgroundService
+namespace Lumen.Profile.RestApi.BackgroundServices;
+
+public sealed class UserRegisteredConsumerBackgroundService(IConsumer<UserRegisteredMessage> consumer) : BackgroundService
 {
-    protected override Task ExecuteAsync(CancellationToken stoppingToken)
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        throw new NotImplementedException();
+        await consumer.ConsumeAsync(stoppingToken);
     }
 }

@@ -1,13 +1,14 @@
-﻿using Lumen.Users.Application.Aggregates.Users.Entities.Posts.Exceptions;
-using Lumen.Users.Domain.Aggregates.Users.Entities.Posts;
-using Lumen.Users.UseCases;
+﻿using Lumen.Profile.Application.Aggregates.Users.Entities.Posts.Exceptions;
+using Lumen.Profile.Application.Common;
+using Lumen.Profile.Domain.Aggregates.Users.Entities.Posts;
+using Lumen.Profile.UseCases.Common;
 using Microsoft.EntityFrameworkCore;
 
-namespace Lumen.Users.Application.Aggregates.Users.Entities.Posts.Commands;
+namespace Lumen.Profile.Application.Aggregates.Users.Entities.Posts.Commands;
 
 public sealed record DeletePostByIdCommand : ICommand<PostResponse>
 {
-    public required int Id { get; set; }
+    public required Guid Id { get; set; }
 }
 
 public sealed class DeletePostByIdCommandHandler(IApplicationContext context) : ICommandHandler<DeletePostByIdCommand, PostResponse>

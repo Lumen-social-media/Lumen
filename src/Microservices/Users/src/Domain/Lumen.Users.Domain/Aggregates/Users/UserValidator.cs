@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Lumen.Users.Domain.Aggregates.Users;
+namespace Lumen.Profile.Domain.Aggregates.Users;
 
 public sealed class UserValidator : AbstractValidator<User>
 {

@@ -1,16 +1,16 @@
-﻿using Lumen.Users.Domain.Aggregates.Users.Entities.Posts;
-using Lumen.Users.Domain.Aggregates.Users.Entities.Posts.Dtos;
+﻿using Lumen.Profile.Domain.Aggregates.Communities;
+using Lumen.Profile.Domain.Aggregates.Users.Entities.Posts;
 
-namespace Lumen.Users.Domain.Aggregates.Users;
+namespace Lumen.Profile.Domain.Aggregates.Users;
 
 public sealed partial class User
 {
     public IEnumerable<Post> Posts => posts;
     private List<Post> posts = new List<Post>();
 
-    public Post AddPost(CreatePostDto dto)
+    public Post AddPost(string body, Community? community)
     {
-        var post = Post.Create(dto);
+        var post = Post.Create(body, this, community);
         posts.Add(post);
 
         return post;
@@ -19,12 +19,15 @@ public sealed partial class User
     public Post RemovePost(Post post)
     {
         posts.Remove(post);
-        
+
         return post;
     }
 
-    public Post PartiallyUpdatePost()
+    public static Post PartiallyUpdatePost(Post post, string? body)
     {
-        throw new NotImplementedException();
+        if (!string.IsNullOrWhiteSpace(body))
+            post.Body = body;
+
+        return post;
     }
 }

@@ -1,7 +1,8 @@
-﻿using Lumen.Users.Domain.Aggregates.Users.Entities.Posts;
-using Lumen.Users.UseCases;
+﻿using Lumen.Profile.Application.Common;
+using Lumen.Profile.Domain.Aggregates.Users.Entities.Posts;
+using Lumen.Profile.UseCases.Common;
 
-namespace Lumen.Users.Application.Aggregates.Users.Entities.Posts.Commands;
+namespace Lumen.Profile.Application.Aggregates.Users.Entities.Posts.Commands;
 
 public sealed record CreatePostCommand : ICommand<PostResponse>
 {
@@ -23,6 +24,6 @@ public sealed class CreatePostCommandHandler(IApplicationContext context) : ICom
 
     public async Task<Post> CreateAsync(CreatePostCommand command, CancellationToken cancellationToken)
     {
-
+        return null;
     }
 }

@@ -1,8 +1,8 @@
 ﻿using FluentValidation;
-using Lumen.Users.Domain.Aggregates.Users.Entities.PostImages;
-using Lumen.Users.Domain.Aggregates.Users.Entities.Posts;
+using Lumen.Profile.Domain.Aggregates.Users.Entities.PostImages;
+using Lumen.Profile.Domain.Aggregates.Users.Entities.Posts;
 
-namespace Lumen.Users.Domain.Aggregates.Users;
+namespace Lumen.Profile.Domain.Aggregates.Users;
 
 public sealed partial class User
 {

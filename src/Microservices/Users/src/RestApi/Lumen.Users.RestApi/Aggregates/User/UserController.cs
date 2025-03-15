@@ -1,46 +1,44 @@
-﻿using Lumen.Users.Application.Aggregates.Users;
-using Lumen.Users.Application.Aggregates.Users.Commands;
-using Lumen.Users.Application.Aggregates.Users.Queries;
-using Lumen.Users.Domain.Aggregates.Users.Dtos;
-using Lumen.Users.Domain.Aggregates.Users.ValueObjects;
-using Mapster;
+﻿using Lumen.Profile.Application.Aggregates.Users;
+using Lumen.Profile.Application.Aggregates.Users.Commands;
+using Lumen.Profile.Application.Aggregates.Users.Queries;
+using Lumen.Profile.RestApi.Aggregates.User.Models;
 using MediatR;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Lumen.Users.RestApi.Aggregates.User;
+namespace Lumen.Profile.RestApi.Aggregates.User;
 
 [ApiController]
-[Route("/api/v1/users")]
-public class UserController(IMediator mediator) : ApiControllerBase(mediator)
+[Route("api/v1/users")]
+public sealed class UserController(IMediator mediator) : ControllerBase
 {
-    [HttpPost]
-    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(UserResponse))]
-    public async Task<ActionResult<UserResponse>> CreateUser([FromBody] CreateUserDto userDto, CancellationToken cancellationToken)
+    [HttpGet("{userId:guid}/profile")]
+    [ProducesResponseType(typeof(GetUserProfileQueryResponse), StatusCodes.Status200OK)]
+    public async Task<ActionResult<GetUserProfileQueryResponse>> GetProfile(Guid userId, CancellationToken cancellationToken)
     {
-        var command = userDto.Adapt<CreateUserCommand>();
-        var response = await Mediator.Send(command, cancellationToken);
-
-        return CreatedAtAction(nameof(CreateUser), response);
-    }
-
-    [HttpGet("{userId:int}/profile")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetUserProfileQueryResponse))]
-    public async Task<ActionResult<GetUserProfileQueryResponse>> GetProfile(int userId, CancellationToken cancellationToken)
-    {
-        var query = new GetUserProfileQuery { UserId = UserId.Create(userId) };
-        var response = await Mediator.Send(query, cancellationToken);
+        var query = new GetUserProfileQuery { UserId = userId };
+        var response = await mediator.Send(query, cancellationToken);
 
         return Ok(response);
     }
 
-    [HttpDelete("{userId:int}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserResponse))]
-    public async Task<ActionResult<UserResponse>> DeleteUser(int userId, CancellationToken cancellationToken)
+    [HttpPatch("{userId:guid}")]
+    [ProducesResponseType(typeof(UserResponse), StatusCodes.Status200OK)]
+    public async Task<ActionResult<UserResponse>> Update(Guid userId, [FromBody] JsonPatchDocument<UpdateUserModel> model, CancellationToken cancellationToken)
     {
-        var command = new DeleteUserByIdCommand { Id = UserId.Create(userId) };
-        var response = await Mediator.Send(command, cancellationToken);
-
+        var command = new UpdateUserCommand();
+        var response = await mediator.Send(command, cancellationToken);
+        
         return Ok(response);
     }
 
+    [HttpDelete("{userId:guid}")]
+    [ProducesResponseType(typeof(UserResponse), StatusCodes.Status200OK)]
+    public async Task<ActionResult<UserResponse>> DeleteUser(Guid userId, CancellationToken cancellationToken)
+    {
+        var command = new DeleteUserByIdCommand { Id = userId };
+        var response = await mediator.Send(command, cancellationToken);
+
+        return Ok(response);
+    }
 }

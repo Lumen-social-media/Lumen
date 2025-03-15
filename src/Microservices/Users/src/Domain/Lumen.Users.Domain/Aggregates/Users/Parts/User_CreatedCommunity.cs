@@ -1,6 +1,6 @@
-﻿using Lumen.Users.Domain.Aggregates.Communities;
+﻿using Lumen.Profile.Domain.Aggregates.Communities;
 
-namespace Lumen.Users.Domain.Aggregates.Users;
+namespace Lumen.Profile.Domain.Aggregates.Users;
 
 public sealed partial class User
 {

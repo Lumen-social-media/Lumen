@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Lumen.Users.Domain.Aggregates.Users.Entities.RootAnswerComments;
+namespace Lumen.Profile.Domain.Aggregates.Users.Entities.RootAnswerComments;
 
 public sealed class RootAnswerCommentValidator : AbstractValidator<RootAnswerComment>
 {

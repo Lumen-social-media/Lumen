@@ -1,8 +1,8 @@
 using FluentValidation;
-using Lumen.Users.Domain.Aggregates.Users;
-using Lumen.Users.Domain.Aggregates.Users.Entities.Posts;
+using Lumen.Profile.Domain.Aggregates.Users;
+using Lumen.Profile.Domain.Aggregates.Users.Entities.Posts;
 
-namespace Lumen.Users.Domain.Aggregates.Communities;
+namespace Lumen.Profile.Domain.Aggregates.Communities;
 
 public sealed partial class Community
 {

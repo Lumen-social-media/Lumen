@@ -1,14 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Lumen.Users.Domain.Aggregates.Communities;
-using Lumen.Users.Domain.Aggregates.Users;
-using Lumen.Users.Domain.Aggregates.Users.Entities.CommentImages;
-using Lumen.Users.Domain.Aggregates.Users.Entities.Posts;
-using Lumen.Users.Domain.Aggregates.Users.Entities.PostImages;
-using Lumen.Users.Domain.Aggregates.Users.Entities.RootAnswerComments;
-using Lumen.Users.Domain.Aggregates.Users.Entities.RootComments;
-using Lumen.Users.UseCases;
+using Lumen.Profile.UseCases.Common;
+using Lumen.Profile.Domain.Aggregates.Users;
+using Lumen.Profile.Domain.Aggregates.Users.Entities.Posts;
+using Lumen.Profile.Domain.Aggregates.Communities;
+using Lumen.Profile.Domain.Aggregates.Users.Entities.RootComments;
+using Lumen.Profile.Domain.Aggregates.Users.Entities.RootAnswerComments;
+using Lumen.Profile.Domain.Aggregates.Users.Entities.PostImages;
+using Lumen.Profile.Domain.Aggregates.Users.Entities.CommentImages;
 
-namespace Lumen.Users.Infrastructure;
+namespace Lumen.Profile.Infrastructure;
 
 public sealed class LumenDbContext : DbContext, IApplicationContext
 {

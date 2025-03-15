@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Lumen.Users.Application.Common;
+namespace Lumen.Profile.Application.Common;
 
 public interface ICommandHandler<TCommand, TResponse> : IRequestHandler<TCommand, TResponse>
     where TCommand : ICommand<TResponse>

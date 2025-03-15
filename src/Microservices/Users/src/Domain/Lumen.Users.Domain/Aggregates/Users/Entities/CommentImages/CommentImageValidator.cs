@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Lumen.Users.Domain.Aggregates.Users.Entities.CommentImages;
+namespace Lumen.Profile.Domain.Aggregates.Users.Entities.CommentImages;
 
 public sealed class CommentImageValidator : AbstractValidator<CommentImage>
 {

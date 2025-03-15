@@ -1,21 +1,19 @@
 ﻿using FluentValidation;
-using Lumen.Users.Domain.Aggregates.Users.Entities.CommentImages.Dtos;
-using Lumen.Users.Domain.Aggregates.Users.Entities.RootComments;
-using Lumen.Users.Domain.Aggregates.Users.ValueObjects;
-using Lumen.Users.Domain.Common;
+using Lumen.Profile.Domain.Aggregates.Users.Entities.RootComments;
+using Lumen.Profile.Domain.Common;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Lumen.Users.Domain.Aggregates.Users.Entities.CommentImages;
+namespace Lumen.Profile.Domain.Aggregates.Users.Entities.CommentImages;
 
-public sealed class CommentImage : IEntity<int>
+public sealed class CommentImage : IEntity<Guid>
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; } = Guid.NewGuid();
 
     public RootComment Comment { get; set; } = default!;
-    public int CommentId { get; set; }
+    public Guid CommentId { get; set; }
 
     public User Owner { get; set; } = default!;
-    public UserId OwnerId { get; set; }
+    public Guid OwnerId { get; set; }
 
     public required string Url { get; set; }
 
@@ -27,15 +25,15 @@ public sealed class CommentImage : IEntity<int>
 
     }
 
-    internal static CommentImage Create(CreateCommentImageDto dto)
+    internal static CommentImage Create(string url, User owner, RootComment comment)
     {
         var image = new CommentImage
         {
-            Url = dto.Url,
-            Owner = dto.Owner,
-            OwnerId = dto.Owner.Id,
-            Comment = dto.Comment,
-            CommentId = dto.Comment.Id
+            Url = url,
+            Owner = owner,
+            OwnerId = owner.Id,
+            Comment = comment,
+            CommentId = comment.Id
         };
 
         var validator = new CommentImageValidator();
@@ -43,5 +41,4 @@ public sealed class CommentImage : IEntity<int>
 
         return image;
     }
-
 }

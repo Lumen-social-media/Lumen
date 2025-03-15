@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Lumen.Users.Application.Common;
+namespace Lumen.Profile.Application.Common;
 
 public interface IQueryHandler<TQuery, TResponse> : IRequestHandler<TQuery, TResponse>
     where TQuery : IQuery<TResponse>

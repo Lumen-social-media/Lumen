@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Aggregates\Communities\Entities\**" />
+    <Compile Remove="Aggregates\Users\Entities\RootAnswerComments\Models\**" />
+    <Compile Remove="Aggregates\Users\Entities\RootComments\Models\**" />
+    <EmbeddedResource Remove="Aggregates\Communities\Entities\**" />
+    <EmbeddedResource Remove="Aggregates\Users\Entities\RootAnswerComments\Models\**" />
+    <EmbeddedResource Remove="Aggregates\Users\Entities\RootComments\Models\**" />
+    <None Remove="Aggregates\Communities\Entities\**" />
+    <None Remove="Aggregates\Users\Entities\RootAnswerComments\Models\**" />
+    <None Remove="Aggregates\Users\Entities\RootComments\Models\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.11.0" />
+  </ItemGroup>
+
+</Project>

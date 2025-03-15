@@ -1,8 +1,10 @@
-﻿namespace Lumen.Users.Application.Aggregates.Users.Entities.Posts;
+﻿namespace Lumen.Profile.Application.Aggregates.Users.Entities.Posts;
 
 public sealed record PostResponse
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     public required string Body { get; set; }
-
+    public Guid? CommunityId { get; set; }
+    public Guid OwnerId { get; set; }
+    public DateTime CreatedAt { get; set; }
 }

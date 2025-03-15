@@ -1,23 +1,22 @@
 ﻿using FluentValidation;
-using Lumen.Users.Domain.Aggregates.Users.Entities.CommentImages;
-using Lumen.Users.Domain.Aggregates.Users.Entities.Posts;
-using Lumen.Users.Domain.Aggregates.Users.Entities.RootAnswerComments;
-using Lumen.Users.Domain.Aggregates.Users.ValueObjects;
-using Lumen.Users.Domain.Common;
+using Lumen.Profile.Domain.Aggregates.Users.Entities.CommentImages;
+using Lumen.Profile.Domain.Aggregates.Users.Entities.Posts;
+using Lumen.Profile.Domain.Aggregates.Users.Entities.RootAnswerComments;
+using Lumen.Profile.Domain.Common;
 
-namespace Lumen.Users.Domain.Aggregates.Users.Entities.RootComments;
+namespace Lumen.Profile.Domain.Aggregates.Users.Entities.RootComments;
 
-public sealed class RootComment : IEntity<int>
+public sealed class RootComment : IEntity<Guid>
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; } = Guid.NewGuid();
 
     public IEnumerable<CommentImage> Images { get; set; } = new List<CommentImage>();
     
     public User Owner { get; set; } = default!;
-    public UserId OwnerId { get; set; }
+    public Guid OwnerId { get; set; }
 
     public Post Post { get; set; } = default!;
-    public int PostId { get; set; }
+    public Guid PostId { get; set; }
 
     public required string Body { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;

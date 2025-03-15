@@ -1,4 +1,4 @@
-﻿namespace Lumen.Users.Domain.Common;
+﻿namespace Lumen.Profile.Domain.Common;
 
 public interface IEntity<TId> where TId : notnull
 {

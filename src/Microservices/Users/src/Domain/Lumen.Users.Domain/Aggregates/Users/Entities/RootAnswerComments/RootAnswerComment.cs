@@ -1,19 +1,18 @@
 ﻿using FluentValidation;
-using Lumen.Users.Domain.Aggregates.Users.Entities.RootComments;
-using Lumen.Users.Domain.Aggregates.Users.ValueObjects;
-using Lumen.Users.Domain.Common;
+using Lumen.Profile.Domain.Aggregates.Users.Entities.RootComments;
+using Lumen.Profile.Domain.Common;
 
-namespace Lumen.Users.Domain.Aggregates.Users.Entities.RootAnswerComments;
+namespace Lumen.Profile.Domain.Aggregates.Users.Entities.RootAnswerComments;
 
-public sealed class RootAnswerComment : IEntity<int>
+public sealed class RootAnswerComment : IEntity<Guid>
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; } = Guid.NewGuid();
 
     public required User Owner { get; set; } = default!;
-    public UserId OwnerId { get; set; }
+    public Guid OwnerId { get; set; }
 
     public required RootComment Root { get; set; } = default!;
-    public int RootId { get; set; }
+    public Guid RootId { get; set; }
 
     public required string Body { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;

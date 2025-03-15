@@ -1,31 +1,25 @@
-using Lumen.Users.Application.Common.Extensions;
-using Lumen.Users.Infrastructure.Common;
-using Lumen.Users.Infrastructure.Common.Extensions;
+using Lumen.Profile.Application.Common.Extensions;
+using Lumen.Profile.Infrastructure.Common.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
-var configuration = builder.Configuration;
+var config = builder.Configuration;
 var services = builder.Services;
 
 services.AddControllers();
 services.AddOpenApi();
 
-var infrastructureOptions = new InfrastructureOptions
-{
-    ConnectionString = configuration.GetConnectionString("PostgreSQL"),
-    RabbitMQHost = configuration["RabbitMQ:Host"]!,
-    RabbitMQPassword = configuration["RabbitMQ:Password"]!,
-    RabbitMQUserName = configuration["RabbitMQ:UserName"]!
-};
-
 services.AddApplication();
+
+var infrastructureOptions = services.ConfigureInfrastructureOptions(config);
 services.AddInfrastructure(infrastructureOptions);
+
 services.AddTransient(s => s.GetService<HttpContext>()!.User);
 
 var app = builder.Build();
 
 app.UseCors(options =>
 {
-    options.WithOrigins(configuration.GetSection("Cors").Get<string[]>()!)
+    options.WithOrigins(config.GetSection("Cors").Get<string[]>()!)
         .AllowCredentials()
         .AllowAnyMethod()
         .AllowAnyHeader()

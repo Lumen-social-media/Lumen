@@ -1,4 +1,4 @@
-﻿namespace Lumen.Users.Infrastructure.Common.Extensions;
+﻿namespace Lumen.Profile.Infrastructure.Common.Extensions;
 
 public static class LumenDbContextExtensions
 {

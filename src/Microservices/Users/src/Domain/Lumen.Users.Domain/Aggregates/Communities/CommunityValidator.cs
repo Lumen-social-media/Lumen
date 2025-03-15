@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Lumen.Users.Domain.Aggregates.Communities;
+namespace Lumen.Profile.Domain.Aggregates.Communities;
 
 public sealed class CommunityValidator : AbstractValidator<Community>
 {

@@ -1,7 +1,7 @@
 ﻿using System.Numerics;
 using System.Security.Claims;
 
-namespace Lumen.Users.Application.Common.Extensions;
+namespace Lumen.Profile.Application.Common.Extensions;
 
 public static class UserClaimsPrincipalExtensions
 {
@@ -28,10 +28,13 @@ public static class UserClaimsPrincipalExtensions
     /// </summary>
     /// <param name="principal"></param>
     /// <returns><see cref="Nullable"/> if </returns>
-    public static int? ExtractId(this ClaimsPrincipal principal)
+    public static Guid? ExtractId(this ClaimsPrincipal principal)
     {
         var claim = principal.FindFirst(ClaimTypes.NameIdentifier);
-        var id = int.Parse(claim.Value);
+
+        if (claim is null) return null;
+
+        var id = Guid.Parse(claim.Value);
 
         return id;
     }

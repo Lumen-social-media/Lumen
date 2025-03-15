@@ -6,17 +6,11 @@ using System.Text.Json;
 
 namespace Lumen.Identity.Infrastructure.Common.EventBus;
 
-public sealed class RabbitMQEventBus(IOptions<InfrastructureOptions> infrastructureOptions) : IEventBus
+public sealed class RabbitMQEventBus(IConnectionFactory connectionFactory) : IEventBus
 {
     public async Task PublishAsync<TMessage>(TMessage message, CancellationToken cancellationToken = default)
     {
-        var factory = new ConnectionFactory()
-        {
-            HostName = infrastructureOptions.Value.RabbitMQHost,
-            Password = infrastructureOptions.Value.RabbitMQPassword
-        };
-
-        using var connection = await factory.CreateConnectionAsync(cancellationToken);
+        using var connection = await connectionFactory.CreateConnectionAsync(cancellationToken);
         using var channel = await connection.CreateChannelAsync(cancellationToken: cancellationToken);
         await channel.QueueDeclareAsync(queue: typeof(TMessage).Name,
                                         durable: true,

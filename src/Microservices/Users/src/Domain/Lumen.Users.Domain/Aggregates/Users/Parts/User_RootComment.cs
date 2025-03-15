@@ -1,8 +1,8 @@
 ﻿using FluentValidation;
-using Lumen.Users.Domain.Aggregates.Users.Entities.RootComments;
-using Lumen.Users.Domain.Aggregates.Users.Entities.Posts;
+using Lumen.Profile.Domain.Aggregates.Users.Entities.Posts;
+using Lumen.Profile.Domain.Aggregates.Users.Entities.RootComments;
 
-namespace Lumen.Users.Domain.Aggregates.Users;
+namespace Lumen.Profile.Domain.Aggregates.Users;
 
 public sealed partial class User
 {
@@ -26,7 +26,7 @@ public sealed partial class User
         rootComments.Remove(comment);
     }
 
-    public RootComment PartiallyUpdateRootComment(RootComment comment, string? body)
+    public static RootComment PartiallyUpdateRootComment(RootComment comment, string? body)
     {
         if (!string.IsNullOrWhiteSpace(body))
             comment.Body = body;

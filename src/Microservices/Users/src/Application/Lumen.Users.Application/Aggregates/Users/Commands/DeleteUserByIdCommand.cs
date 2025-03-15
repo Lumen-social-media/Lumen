@@ -1,26 +1,23 @@
-﻿using Lumen.Users.Domain.Aggregates.Users.ValueObjects;
-using Lumen.Users.UseCases;
-using Mapster;
+﻿using Lumen.Profile.Application.Aggregates.Users.Exceptions;
+using Lumen.Profile.Application.Aggregates.Users.Mappers.Extensions;
+using Lumen.Profile.Application.Common;
+using Lumen.Profile.UseCases.Aggregates.Users.Extensions;
+using Lumen.Profile.UseCases.Common;
 
-namespace Lumen.Users.Application.Aggregates.Users.Commands;
+namespace Lumen.Profile.Application.Aggregates.Users.Commands;
 
-public sealed class DeleteUserByIdCommand : ICommand<UserResponse>
+public sealed record DeleteUserByIdCommand : ICommand<UserResponse>
 {
-    public required UserId Id { get; set; }
+    public required Guid Id { get; set; }
 }
 
 public sealed class DeleteUserByIdCommandHandler(IApplicationContext context) : ICommandHandler<DeleteUserByIdCommand, UserResponse>
 {
     public async Task<UserResponse> Handle(DeleteUserByIdCommand command, CancellationToken cancellationToken)
     {
-        var user = await context.Users.FindAsync([command.Id], cancellationToken)
-            ?? throw new NullReferenceException("");
-
-        context.Users.Remove(user);
-        await context.SaveChangesAsync(cancellationToken);
-
-        var response = user.Adapt<UserResponse>();
-
-        return response;
+        var user = await context.Users.DeleteByIdAsync(command.Id, cancellationToken)
+            ?? throw new UserNotFoundException(command.Id);
+        
+        return user.ToResponse();
     }
 }

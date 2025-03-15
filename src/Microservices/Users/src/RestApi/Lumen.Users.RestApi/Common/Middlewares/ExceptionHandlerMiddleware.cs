@@ -1,5 +1,4 @@
-﻿
-namespace Lumen.Users.RestApi.Common.Middlewares;
+﻿namespace Lumen.Profile.RestApi.Common.Middlewares;
 
 public sealed class ExceptionHandlerMiddleware : IMiddleware
 {

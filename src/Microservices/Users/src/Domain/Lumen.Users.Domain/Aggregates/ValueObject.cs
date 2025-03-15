@@ -1,4 +1,4 @@
-﻿namespace Lumen.Users.Domain.Aggregates;
+﻿namespace Lumen.Profile.Domain.Aggregates;
 
 public abstract record ValueObject
 {
