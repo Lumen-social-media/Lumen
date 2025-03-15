@@ -22,15 +22,6 @@ public sealed class UserController(IMediator mediator) : ControllerBase
         return Ok(response);
     }
 
-    [HttpPatch("{userId:guid}")]
-    [ProducesResponseType(typeof(UserResponse), StatusCodes.Status200OK)]
-    public async Task<ActionResult<UserResponse>> Update(Guid userId, [FromBody] JsonPatchDocument<UpdateUserModel> model, CancellationToken cancellationToken)
-    {
-        var command = new UpdateUserCommand();
-        var response = await mediator.Send(command, cancellationToken);
-        
-        return Ok(response);
-    }
 
     [HttpDelete("{userId:guid}")]
     [ProducesResponseType(typeof(UserResponse), StatusCodes.Status200OK)]
