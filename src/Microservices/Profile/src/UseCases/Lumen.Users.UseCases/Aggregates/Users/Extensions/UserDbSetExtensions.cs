@@ -25,9 +25,9 @@ public static class UserDbSetExtensions
         var user = await set.FindByIdAsync(id, cancellationToken);
 
         if (user is null) return null;
-        ICommandDispatcher
+
         var e = set.Remove(user);
-        e.CurrentValues.SetValues(,)
+
         return user;
     }
 }
