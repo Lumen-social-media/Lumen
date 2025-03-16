@@ -21,4 +21,15 @@ public static class UserDbSetExtensions
 
         return user;
     }
+
+    public static async Task<User?> DeleteByIdAsync(this DbSet<User> dbSet, Guid id, CancellationToken cancellationToken = default)
+    {
+        var user = await dbSet.FindByIdAsync(id, cancellationToken);
+
+        if (user is null) return null;
+
+        var entry = dbSet.Remove(user);
+
+        return entry.Entity;
+    }
 }

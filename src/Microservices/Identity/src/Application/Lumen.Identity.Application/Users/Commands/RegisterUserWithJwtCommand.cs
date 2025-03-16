@@ -5,7 +5,6 @@ using Lumen.Identity.Application.Common.Caching;
 using Lumen.Identity.Application.Common.EventBus;
 using Lumen.Identity.Application.Users.Exceptions;
 using Lumen.Identity.Application.Users.Mappers.Extensions;
-using Lumen.Identity.Application.Users.Repositories;
 using Lumen.Identity.Domain.Users;
 using Lumen.Identity.Domain.Users.ValueObjects.Email;
 using Lumen.Identity.UseCase.Common;
@@ -35,7 +34,6 @@ public sealed class RegisterUserWithJwtCommand : ICommand<AccessTokenResponse>
 }
 
 public sealed class RegisterUserWithJwtCommandHandler(IApplicationDbContext context,
-                                                      IUserCachedRepository cachedRepository,
                                                       IEventBus bus,
                                                       JwtFactory jwtFactory,
                                                       ClaimsFactory claimsFactory,
@@ -51,7 +49,11 @@ public sealed class RegisterUserWithJwtCommandHandler(IApplicationDbContext cont
         if (user is not null)
             throw new UserAlreadyExistsException(command.Email);
 
-        user = await CreateUser(command, cancellationToken);
+        var passwordHash = passwordHasher.Hash(command.Password);
+        user = command.ToUser(passwordHash);
+
+        await context.Users.AddAsync(user, cancellationToken);
+        await context.SaveChangesAsync(cancellationToken);
 
         var claims = claimsFactory.Create(user);
         var accessToken = jwtFactory.Create(claims);
@@ -72,15 +74,6 @@ public sealed class RegisterUserWithJwtCommandHandler(IApplicationDbContext cont
         await bus.PublishAsync(message, cancellationToken);
 
         return response;
-    }
-
-    private async Task<User> CreateUser(RegisterUserWithJwtCommand command, CancellationToken cancellationToken = default)
-    {
-        var passwordHash = passwordHasher.Hash(command.Password);
-        var user = command.ToUser(passwordHash);
-        var createdUser = await cachedRepository.AddAsync(user, cancellationToken);
-
-        return createdUser;
     }
 
 }

@@ -36,6 +36,7 @@ public static class UserMapperExtensions
         return user;
     }
 
+
     public static UserRegisteredMessage ToUserRegisteredMessage(this User user)
     {
         var message = new UserRegisteredMessage

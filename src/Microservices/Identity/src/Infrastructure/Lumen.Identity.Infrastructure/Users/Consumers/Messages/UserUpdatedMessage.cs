@@ -1,8 +1,8 @@
 ﻿using Lumen.Identity.Domain.Users;
 
-namespace Lumen.Identity.Application.Users;
+namespace Lumen.Identity.Infrastructure.Users.Consumers.Messages;
 
-public sealed class UserResponse
+public sealed class UserUpdatedMessage
 {
     public Guid Id { get; set; }
     public required string UserName { get; set; }

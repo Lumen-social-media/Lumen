@@ -33,19 +33,19 @@ public sealed class LoginUserWithJwtCommandHandler(IApplicationDbContext context
 
         var claims = claimsFactory.Create(user);
         var jwtToken = jwtFactory.Create(claims);
-        var refreshToken = await cache.GetStringAsync($"user:{user.Id}:refresh-token", cancellationToken);
+        var cachedRefreshToken = await cache.GetStringAsync($"user:{user.Id}:refresh-token", cancellationToken);
 
-        if (refreshToken is null)
+        if (cachedRefreshToken is null)
         {
-            refreshToken = refreshTokenGenerator.Create();
+            cachedRefreshToken = refreshTokenGenerator.Create();
             var sevenDaysInMinutes = 10080;
-            await cache.SetStringAsync($"user:{user.Id}:refresh-token", refreshToken, sevenDaysInMinutes, cancellationToken);
+            await cache.SetStringAsync($"user:{user.Id}:refresh-token", cachedRefreshToken, sevenDaysInMinutes, cancellationToken);
         }
 
         var response = new AccessTokenResponse
         {
             AccessToken = jwtToken,
-            RefreshToken = refreshToken
+            RefreshToken = cachedRefreshToken
         };
 
         return response;

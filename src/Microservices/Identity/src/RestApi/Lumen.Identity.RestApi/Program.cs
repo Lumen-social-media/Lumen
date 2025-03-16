@@ -1,7 +1,6 @@
-using Lumen.Identity.Application.Common.Auth.Jwt;
 using Lumen.Identity.Application.Common.Extensions;
 using Lumen.Identity.Infrastructure.Common.Extensions;
-using Microsoft.Extensions.Options;
+using Lumen.Identity.RestApi.Common.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
@@ -11,11 +10,8 @@ services.AddControllers();
 services.AddOpenApi();
 services.AddTransient(s => s.GetService<HttpContext>()!.User);
 
-var jwtOptions = services.ConfigureJwtOptions(config);
-services.AddAuthentication().AddJwtBearer(options =>
-{
-    options.TokenValidationParameters = new TokenValidationParametersFactory(Options.Create(jwtOptions)).Create();
-});
+services.AddJwtBearerAuthentication(config);
+services.AddPrometheus(config);
 
 var infrastructureOptions = services.ConfigureInfrastructureOptions(config);
 services.AddInfrastructure(infrastructureOptions);
